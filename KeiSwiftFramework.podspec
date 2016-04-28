@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'KeiSwiftFramework/Classes/**/*'
+  s.source_files = 'KeiSwiftFramework/**/*'
   
   # s.resource_bundles = {
   #   'KeiSwiftFramework' => ['KeiSwiftFramework/Assets/*.png']
