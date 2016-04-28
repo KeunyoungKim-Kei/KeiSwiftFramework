@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'KeiSwiftFramework_Example', :exclusive => true do
+  pod 'KeiSwiftFramework', :path => '../'
+end
+
+target 'KeiSwiftFramework_Tests', :exclusive => true do
+  pod 'KeiSwiftFramework', :path => '../'
+
+  
+end
