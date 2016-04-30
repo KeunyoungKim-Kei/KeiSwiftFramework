@@ -35,38 +35,38 @@ let date1 = NSDate(timeIntervalSince1970: 0)
 let date2 = NSDate()
 
 if date1 < date2 {
-print("asc")
+    print("asc")
 } else if date1 > date2 {
-print("desc")
+    print("desc")
 } else {
-print("same")
+    print("same")
 }
 // Supported Operators : ==, !=, <, <=, >, >=
 
 
 let now = Today.now
 if now == KWeekday.Sunday {
-// ...
+    // ...
 }
 
 if now == KMonth.March {
-// ...
+    // ...
 }
 ```
 
 ### Color
-##### Parse Hex Color String
+##### Parse Hex Color String #RGB, #ARGB, #RRGGBB, #AARRGGBB
 ```Swift
 let hexString = "#03a9f4"
 let color = UIColor(hexString: hexString)
 let color2 = hexString.UIColorValue
 
 if hexString.isHexColorString {
-// ...
+    // ...
 }
 
 if let color = hexString.parseHexColorString() {
-// ...
+    // ...
 }
 ```
 
