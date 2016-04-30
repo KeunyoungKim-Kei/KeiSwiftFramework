@@ -72,9 +72,9 @@ public func -(lhs: NSDate, rhs: NSTimeInterval) -> NSDate {
     return lhs.dateByAddingTimeInterval(rhs * -1)
 }
 
-public func -(lhs: NSTimeInterval, rhs: NSDate) -> NSDate {
-    return rhs - lhs
-}
+//public func -(lhs: NSTimeInterval, rhs: NSDate) -> NSDate {
+//    return rhs - lhs
+//}
 
 
 

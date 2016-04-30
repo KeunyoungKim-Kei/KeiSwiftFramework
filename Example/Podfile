@@ -5,7 +5,5 @@ target 'KeiSwiftFramework_Example', :exclusive => true do
 end
 
 target 'KeiSwiftFramework_Tests', :exclusive => true do
-  pod 'KeiSwiftFramework', :path => '../'
-
-  
+  pod 'KeiSwiftFramework', :path => '../'  
 end
