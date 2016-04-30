@@ -45,8 +45,8 @@ public class KTimeProfiler {
     
     
     
-    public class func report(verbose verbose: Bool = false, funcationName: String = __FUNCTION__) {
-        if sharedInstance.checkPoints.count < 2 {
+    public class func report(verbose verbose: Bool = false, funcationName: String = #function) {
+        if sharedInstance.checkPoints.count < 1 {
             print("KTimeProfiler: Nothing to report. Start new session!")
             return
         }
