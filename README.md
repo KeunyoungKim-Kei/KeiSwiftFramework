@@ -70,6 +70,19 @@ if let color = hexString.parseHexColorString() {
 }
 ```
 
+### CoreData Setup
+```Swift
+class AppDelegate: KApp {
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        setupCoreData(modelName: "Model Name")
+        // or
+        setupCoreData(modelName: "Model Name", storeType: NSSQLiteStoreType, useLightweightMigration: true)
+
+        return true
+    }
+}
+```
+
 
 ## Requirements
 iOS 8 or higher
