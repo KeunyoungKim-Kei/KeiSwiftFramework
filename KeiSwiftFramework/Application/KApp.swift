@@ -112,6 +112,45 @@ public class KApp: UIResponder, UIApplicationDelegate {
     
     /////////////////////////////////////////////////////////////////////
     //
+    // MARK: - Commonly Used Directories
+    //
+    public static var documentsDirectoryURL: NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        return urls.last!
+    }
+    
+    
+    
+    public static var libraryDirectoryURL: NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask)
+        return urls.last!
+    }
+    
+    
+    
+    public static var applicationSupportDirectoryURL: NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)
+        return urls.last!
+    }
+    
+    
+    
+    public static var cacheDirectoryURL: NSURL {
+        let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+        return urls.last!
+    }
+    
+    
+    
+    public static var temporaryDirectoryURL: NSURL {
+        return NSURL(fileURLWithPath: NSTemporaryDirectory())
+    }
+    
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    //
     // MARK: - Core Data stack
     var modelName: String!
     var useLightweightMigration = true
@@ -124,13 +163,6 @@ public class KApp: UIResponder, UIApplicationDelegate {
         useLightweightMigration = useMigration
         storeType = type
     }
-    
-    
-    
-    public lazy var applicationDocumentsDirectory: NSURL = {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1]
-    }()
     
     
     
@@ -147,7 +179,7 @@ public class KApp: UIResponder, UIApplicationDelegate {
         assert(self.modelName != nil, "EMPTY CORE DATA MODEL NAME: use setupCoreData()")
         
         var coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("\(self.modelName).sqlite")
+        let url = KApp.documentsDirectoryURL.URLByAppendingPathComponent("\(self.modelName).sqlite")
         do {
             var options: [NSObject: AnyObject]? = nil
             if self.useLightweightMigration {

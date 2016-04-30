@@ -83,6 +83,63 @@ class AppDelegate: KApp {
 }
 ```
 
+### Time Profiler
+```Swift
+KTimeProfiler.start()                       // Required
+// ...
+KTimeProfiler.checkpoint()
+// ...
+KTimeProfiler.checkpoint("Create File")
+// ...
+KTimeProfiler.checkpoint("Save to DB")
+// ...
+KTimeProfiler.report(verbose: true)
+
+// Verbose Report
+// KTimeProfiler: application(_:didFinishLaunchingWithOptions:) in 0.801861s
+// ==================================================
+// Start            0
+// Checkpoint 1    +0.100269
+// Create File     +0.301065
+// Save to DB      +0.200434
+// End             +0.200093
+// ==================================================
+// total            0.801861
+// ==================================================
+```
+
+### File & Directory
+##### NSURL Extension
+```Swift
+let url = NSURL(fileURLWithPath: ...)
+
+// read only
+url.name
+url.exist
+url.isDirectory
+url.fileSize
+url.creationDate
+url.lastAccessDate
+url.modificationDate
+
+// read/write
+url.hidden
+url.excludedFromBackup
+```
+##### Prevent files from being backed up to iCloud and iTunes
+```Swift
+url.excludedFromBackup = true
+// or
+url.addSkipBackupAttribute()
+// or
+NSFileManager.defaultManager().addSkipBackupAttributeToItemAtURL(url)
+// or
+do {
+    try url.addSkipBackupAttributeOrThrows()
+    // or
+    try NSFileManager.defaultManager().addSkipBackupAttributeToItemAtURLOrThrows(url)
+} catch {}
+```
 
 ## Requirements
 iOS 8 or higher
