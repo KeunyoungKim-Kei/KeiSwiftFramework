@@ -38,7 +38,7 @@ public class Today: NSDate {
     
     
     public class var endDate: NSDate {
-        return NSDate().removeTime() + 24.hour - 1.second
+        return Today.startDate.endDateOfDay()
     }
     
     
@@ -52,13 +52,13 @@ public class Today: NSDate {
 
 public class Yesterday: NSDate {
     public class var startDate: NSDate {
-        return Today.startDate - 1.day
+        return KInterval.dateByAddingDays(-1, toDate: NSDate()).removeTime()
     }
     
     
     
     public class var endDate: NSDate {
-        return Today.endDate - 1.day
+        return Yesterday.startDate.endDateOfDay()
     }
     
     
@@ -73,13 +73,13 @@ public class Yesterday: NSDate {
 
 public class Tomorrow: NSDate {
     public class var startDate: NSDate {
-        return Today.startDate + 1.day
+        return KInterval.dateByAddingDays(1, toDate: NSDate()).removeTime()
     }
     
     
     
     public class var endDate: NSDate {
-        return Today.endDate + 1.day
+        return Tomorrow.startDate.endDateOfDay()
     }
     
     

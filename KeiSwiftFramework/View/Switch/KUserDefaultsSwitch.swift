@@ -1,5 +1,5 @@
 //
-//  NSFileManager+iCloud.swift
+//  KUserDefaultsSwitch.swift
 //
 //  Copyright (c) 2016 Keun young Kim <app@meetkei.com>
 //
@@ -22,31 +22,47 @@
 //  THE SOFTWARE.
 //
 
-import Foundation
-
-public extension NSFileManager{
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // MARK: - Prevent files from being backed up to iCloud and iTunes
+public class KUserDefaultsSwitch: UISwitch {
+    public override var on: Bool {
+        didSet {
+            if let key = userDefaultsKey {
+                KKeyValueStore.saveBool(on, forKey: key)
+            }
+        }
+    }
     
-    /**
-     Sets given URL’s resource property for NSURLIsExcludedFromBackupKey key to true. It throws an error in cases of failure.
-     
-     - Parameter url: A file URL specifying the file or directory to set
-     */
-    public func addSkipBackupAttributeToItemAtURLOrThrows(url:NSURL) throws {
-        try url.addSkipBackupAttributeOrThrows()
+    @IBInspectable public var userDefaultsKey: String? = nil {
+        didSet {
+            update()
+        }
+    }
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        update(false)
     }
     
     
     
-    /**
-     Sets given URL’s resource property for NSURLIsExcludedFromBackupKey key to true.
-     
-     - Parameter url: A file URL specifying the file or directory to set
-     
-     - Returns: **true** if the resource property is successfully set to true; otherwise, false.
-     */
-    public func addSkipBackupAttributeToItemAtURL(url:NSURL) -> Bool {
-        return url.addSkipBackupAttribute()
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        update(false)
+    }
+    
+    
+    public override func setOn(on: Bool, animated: Bool) {
+        super.setOn(on, animated: animated)
+        
+        if let key = userDefaultsKey {
+            KKeyValueStore.saveBool(on, forKey: key)
+        }
+    }
+    
+    public func update(animated: Bool = true) {
+        if let key = userDefaultsKey {
+            let isTrue = KKeyValueStore.boolValue(key)
+            print("UPDATE with \(key) \(isTrue)")
+            setOn(isTrue, animated: animated)
+        }
     }
 }

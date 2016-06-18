@@ -25,6 +25,14 @@
 import Foundation
 
 public extension NSURL {
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - Prevent files from being backed up to iCloud and iTunes
+    
+    /**
+     Sets the receiver’s resource property for NSURLIsExcludedFromBackupKey key to true.
+     
+     - Returns: **true** if the resource property is successfully set to true; otherwise, false.
+     */
     public func addSkipBackupAttribute() -> Bool {
         excludedFromBackup = true        
         return excludedFromBackup
@@ -32,6 +40,9 @@ public extension NSURL {
     
     
     
+    /**
+     Sets the receiver’s resource property for NSURLIsExcludedFromBackupKey key to true. It throws an error in cases of failure.     
+     */
     public func addSkipBackupAttributeOrThrows() throws {
         try setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)
     }

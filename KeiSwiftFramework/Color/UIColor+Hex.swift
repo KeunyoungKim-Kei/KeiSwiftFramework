@@ -25,6 +25,16 @@
 import Foundation
 
 public extension UIColor {
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - Initializing a UIColor Object
+    
+    /**
+     Initializes and returns a color object using the hexadecimal color string.
+     
+     - Parameter hexString: the hexadecimal color string.
+     
+     - Returns: An initialized color object. If *hexString* is not a valid hexadecimal color string, returns a color object whose grayscale value is 1.0 and whose alpha value is 1.0.
+     */
     public convenience init(hexString: String) {
         var red: CGFloat    = 1.0
         var green: CGFloat  = 1.0

@@ -72,6 +72,17 @@ public class KInterval: NSObject {
     
     
     
+    public class func dateByAddingDays(day: Int, toDate: NSDate) -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        
+        let comps = NSDateComponents()
+        comps.day = day
+        
+        return calendar.dateByAddingComponents(comps, toDate: toDate, options: [])!
+    }
+    
+    
+    
     public class func hours(minDate minDate: NSDate, maxDate: NSDate) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
@@ -101,5 +112,16 @@ public class KInterval: NSObject {
     
     public class func minutesAfterNow(date: NSDate, minValue: Int = 0) -> Int {
         return minutes(minDate: NSDate(), maxDate: date, minValue: minValue)
+    }
+    
+    
+    
+    public class func dateByAddingSeconds(second: Int, toDate: NSDate) -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        
+        let comps = NSDateComponents()
+        comps.second = second
+        
+        return calendar.dateByAddingComponents(comps, toDate: toDate, options: [])!
     }
 }

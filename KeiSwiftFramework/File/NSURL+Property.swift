@@ -25,26 +25,39 @@
 import Foundation
 
 public extension NSURL {
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - Accessing the Properties of the URL
+    
+    /**
+     The resource’s name in the file system, returned as an String. (read-only)
+     */
     public var name: String {
-        get {
-            return getStringResourceValue(NSURLNameKey)
-        }
+        return getStringResourceValue(NSURLNameKey)
     }
     
     
     
+    /**
+     A Boolean value that determines whether the resource pointed to by a file URL can be reached. (read-only)
+     */
     public var exist: Bool {
         return checkResourceIsReachableAndReturnError(nil)
     }
     
     
     
+    /**
+     A Boolean value that determines whether the resource is a directory. (read-only)
+     */
     public var isDirectory: Bool {
         return getBoolResourceValue(NSURLIsDirectoryKey)
     }
     
     
     
+    /**
+     A Boolean value that determines whether the resource is hidden. (read-write)
+     */
     public var hidden: Bool {
         get {
             return getBoolResourceValue(NSURLIsHiddenKey)
@@ -61,6 +74,9 @@ public extension NSURL {
     
     
     
+    /**
+     A Boolean value that determines whether the resource is excluded from all backups of app data. (read-write)
+     */
     public var excludedFromBackup: Bool {
         get {
             return getBoolResourceValue(NSURLIsExcludedFromBackupKey)
@@ -77,6 +93,9 @@ public extension NSURL {
     
     
     
+    /**
+     A NSNumber object that represents the resource’s size in bytes. (read-only)
+     */
     public var fileSize: NSNumber {
         if !isDirectory {
             return getNSNumberResourceValue(NSURLFileSizeKey)
@@ -87,6 +106,9 @@ public extension NSURL {
     
     
     
+    /**
+     A NSDate object that represents the resource’s creation date. (read-only)
+     */
     public var creationDate: NSDate {
         get {
             return getNSDateResourceValue(NSURLCreationDateKey)
@@ -95,6 +117,9 @@ public extension NSURL {
     
     
     
+    /**
+     A NSDate object that represents the time at which the resource was most recently accessed. (read-only)
+     */
     public var lastAccessDate: NSDate {
         get {
             return getNSDateResourceValue(NSURLContentAccessDateKey)
@@ -103,6 +128,9 @@ public extension NSURL {
     
     
     
+    /**
+     A NSDate object that represents the time at which the resource was most recently modified. (read-only)
+     */
     public var modificationDate: NSDate {
         get {
             return getNSDateResourceValue(NSURLContentModificationDateKey)
@@ -111,6 +139,17 @@ public extension NSURL {
     
     
     
+    
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // MARK: - Getting and Setting File System Resource Properties
+    
+    /**
+     Returns the string value of the resource property for the specified key.
+     
+     - Parameter key: The name of one of the URL’s resource properties.
+     
+     - Returns: Valid string if value is successfully populated; otherwise, empty stirng("").
+     */
     private func getStringResourceValue(key: String) -> String {
         var value: AnyObject? = ""
         do {
@@ -126,6 +165,13 @@ public extension NSURL {
     
     
     
+    /**
+     Returns the boolean value of the resource property for the specified key.
+     
+     - Parameter key: The name of one of the URL’s resource properties.
+     
+     - Returns: true if value is successfully populated; otherwise, false.
+     */
     private func getBoolResourceValue(key: String) -> Bool {
         var value: AnyObject? = false.NSNumberValue
         do {
@@ -141,6 +187,13 @@ public extension NSURL {
     
     
     
+    /**
+     Returns the NSNumber object of the resource property for the specified key.
+     
+     - Parameter key: The name of one of the URL’s resource properties.
+     
+     - Returns: Valid NSNumber object if value is successfully populated; otherwise, NSNumber object containing 0.
+     */
     private func getNSNumberResourceValue(key: String) -> NSNumber {
         var value: AnyObject? = 0.NSNumberValue
         do {
@@ -156,6 +209,13 @@ public extension NSURL {
     
     
     
+    /**
+     Returns the NSDate object of the resource property for the specified key.
+     
+     - Parameter key: The name of one of the URL’s resource properties.
+     
+     - Returns: Valid NSDate object if value is successfully populated; otherwise, NSDate object set to 00:00:00 UTC on 1 January 1970.
+     */
     private func getNSDateResourceValue(key: String) -> NSDate {
         var value: AnyObject? = NSDate(timeIntervalSince1970: 0)
         do {

@@ -64,6 +64,9 @@ public enum KMonth: Int {
 }
 
 public extension NSDate {
+    /**
+     The number of era units for **self**.
+     */
     public var era: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Era], fromDate: self)
@@ -72,6 +75,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of year units for **self**.
+     */
     public var year: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Year], fromDate: self)
@@ -80,6 +86,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of month units for **self**.
+     */
     public var month: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Month], fromDate: self)
@@ -88,6 +97,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of day units for **self**.
+     */
     public var day: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Day], fromDate: self)
@@ -96,6 +108,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of hour units for **self**.
+     */
     public var hour: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Hour], fromDate: self)
@@ -104,6 +119,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of minute units for **self**.
+     */
     public var minute: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Minute], fromDate: self)
@@ -112,6 +130,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of second units for **self**.
+     */
     public var second: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Second], fromDate: self)
@@ -119,7 +140,9 @@ public extension NSDate {
     }
     
     
-    
+    /**
+     The number of the weekday unit for **self**.
+     */
     public var weekday: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Weekday], fromDate: self)
@@ -128,12 +151,84 @@ public extension NSDate {
     
     
     
+    /**
+     Returns whether **self** is sunday.
+     
+     - Returns: *true* if the date is sunday, otherwise *false*.
+     
+     - Author: Keun young Kim
+     */
     public func isSunday() -> Bool {
         return self == KWeekday.Sunday
     }
     
     
     
+    /**
+     Returns whether **self** is today.
+     
+     - Returns: *true* if **self** is today, otherwise *false*.
+     
+     - Author: Keun young Kim
+     */
+    @available(iOS 8, *)
+    public func isToday() -> Bool {
+        let calendar = NSCalendar.currentCalendar()
+        return calendar.isDateInToday(self)
+    }
+    
+    
+    
+    /**
+     Returns whether **self** is yesterday.
+     
+     - Returns: *true* if **self** is yesterday, otherwise *false*.
+     
+     - Author: Keun young Kim
+     */
+    @available(iOS 8, *)
+    public func isYesterday() -> Bool {
+        let calendar = NSCalendar.currentCalendar()
+        return calendar.isDateInYesterday(self)
+    }
+    
+    
+    
+    /**
+     Returns whether **self** is tomorrow.
+     
+     - Returns: *true* if **self** is tomorrow, otherwise *false*.
+     
+     - Author: Keun young Kim
+     */
+    @available(iOS 8, *)
+    public func isTomorrow() -> Bool {
+        let calendar = NSCalendar.currentCalendar()
+        return calendar.isDateInTomorrow(self)
+    }
+    
+    
+    
+    /**
+     Returns whether two dates are in the same day.
+     
+     - Parameter date: date to compare
+     
+     - Returns: *true* if both dates are within the same day, otherwise *no*.
+     
+     - Author: Keun young Kim
+     */
+    @available(iOS 8, *)
+    public func isSameDay(date: NSDate) -> Bool {
+        let calendar = NSCalendar.currentCalendar()
+        return calendar.isDate(date, inSameDayAsDate: self)
+    }
+    
+    
+    
+    /**
+     The ordinal number of weekday units for **self**.
+     */
     public var weekdayOrdinal: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.WeekdayOrdinal], fromDate: self)
@@ -142,6 +237,9 @@ public extension NSDate {
     
     
     
+    /**
+     The number of quarters for **self**.
+     */
     public var quarter: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Quarter], fromDate: self)
@@ -150,6 +248,9 @@ public extension NSDate {
     
     
     
+    /**
+     The ISO 8601 week date of the year for **self**.
+     */
     public var weekOfYear: Int {
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.WeekOfYear], fromDate: self)
@@ -183,7 +284,10 @@ public extension NSDate {
     
     
     public func endDateOfDay() -> NSDate {
-        return startDateOfDay() + (1.day - 1.second)
+        let start = startDateOfDay()
+        let tomorrow = KInterval.dateByAddingDays(1, toDate: start)
+        
+        return KInterval.dateByAddingSeconds(-1, toDate: tomorrow)
     }
     
     

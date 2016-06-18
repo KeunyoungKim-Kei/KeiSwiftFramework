@@ -34,13 +34,17 @@ public extension NSDate {
     
     
     
-    public func toLocalizedString(format: String, locale: NSLocale) -> String {
+    public func toLocalizedString(format: String, locale: NSLocale = NSLocale.currentLocale(), timeZone: NSTimeZone = NSTimeZone.defaultTimeZone()) -> String {
         let currentLocale = privateFormatter.locale
+        let currentTimeZone = privateFormatter.timeZone
         
         privateFormatter.locale = locale
+        privateFormatter.timeZone = timeZone
         privateFormatter.dateFormat = format
         let result = privateFormatter.stringFromDate(self)
+        
         privateFormatter.locale = currentLocale
+        privateFormatter.timeZone = currentTimeZone
         
         return result
     }
