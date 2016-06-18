@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "KeiSwiftFramework"
-  s.version          = "0.4.3"
+  s.version          = "0.4.4"
   s.summary          = "Swift Utility Framework"
 
 # This description is used to generate tags and improve search results.
