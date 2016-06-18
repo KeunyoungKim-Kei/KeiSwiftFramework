@@ -36,6 +36,22 @@ public class KInterval: NSObject {
     
     
     
+    public class func dateByAdding(toDate date: NSDate, year: Int = 0, month: Int = 0, day: Int = 0, hour: Int = 0, minute: Int = 0, second: Int = 0) -> NSDate {
+        let calendar = NSCalendar.currentCalendar()
+        
+        let comps = NSDateComponents()
+        comps.year = year
+        comps.month = month
+        comps.day = day
+        comps.hour = hour
+        comps.minute = minute
+        comps.second = second
+        
+        return calendar.dateByAddingComponents(comps, toDate: date, options: [])!
+    }
+    
+    
+    
     public class func years(minDate minDate: NSDate, maxDate: NSDate) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
@@ -46,12 +62,24 @@ public class KInterval: NSObject {
     
     
     
+    public class func dateByAddingYears(year: Int, toDate: NSDate) -> NSDate {
+        return dateByAdding(toDate: toDate, year: year)        
+    }
+    
+    
+    
     public class func months(minDate minDate: NSDate, maxDate: NSDate) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
         let calendar = NSCalendar.currentCalendar()
         let components = calendar.components([.Month], fromDate: minDate, toDate: maxDate, options:[])
         return components.month
+    }
+    
+    
+    
+    public class func dateByAddingMonths(month: Int, toDate: NSDate) -> NSDate {
+        return dateByAdding(toDate: toDate, month: month)
     }
     
     
@@ -73,12 +101,7 @@ public class KInterval: NSObject {
     
     
     public class func dateByAddingDays(day: Int, toDate: NSDate) -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        
-        let comps = NSDateComponents()
-        comps.day = day
-        
-        return calendar.dateByAddingComponents(comps, toDate: toDate, options: [])!
+        return dateByAdding(toDate: toDate, day: day)
     }
     
     
@@ -117,11 +140,6 @@ public class KInterval: NSObject {
     
     
     public class func dateByAddingSeconds(second: Int, toDate: NSDate) -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
-        
-        let comps = NSDateComponents()
-        comps.second = second
-        
-        return calendar.dateByAddingComponents(comps, toDate: toDate, options: [])!
+        return dateByAdding(toDate: toDate, second: second)
     }
 }
