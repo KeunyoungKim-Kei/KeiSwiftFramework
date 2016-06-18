@@ -96,12 +96,12 @@ public extension NSDate {
      - Author: Keun young Kim
      */
     public func isToday() -> Bool {
-        if #available(iOS 8, *) {
+//        if #available(iOS 8, *) {
             let calendar = NSCalendar.currentCalendar()
             return calendar.isDateInToday(self)
-        }
-        
-        return hasSameDay(NSDate())
+//        }
+//        
+//        return hasSameDay(NSDate())
     }
     
     
