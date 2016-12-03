@@ -32,7 +32,7 @@ public extension NSURL {
      The resource’s name in the file system, returned as an String. (read-only)
      */
     public var name: String {
-        return getStringResourceValue(NSURLNameKey)
+        return getStringResourceValue(URLResourceKey.nameKey.rawValue)
     }
     
     
@@ -50,7 +50,7 @@ public extension NSURL {
      A Boolean value that determines whether the resource is a directory. (read-only)
      */
     public var isDirectory: Bool {
-        return getBoolResourceValue(NSURLIsDirectoryKey)
+        return getBoolResourceValue(URLResourceKey.isDirectoryKey.rawValue)
     }
     
     
@@ -60,12 +60,12 @@ public extension NSURL {
      */
     public var hidden: Bool {
         get {
-            return getBoolResourceValue(NSURLIsHiddenKey)
+            return getBoolResourceValue(URLResourceKey.isHiddenKey.rawValue)
         }
         
         set {
             do {
-                try setResourceValue(newValue, forKey: NSURLIsHiddenKey)
+                try setResourceValue(newValue as AnyObject?, forKey: URLResourceKey.isHiddenKey)
             } catch {
                 print(error)
             }
@@ -79,12 +79,12 @@ public extension NSURL {
      */
     public var excludedFromBackup: Bool {
         get {
-            return getBoolResourceValue(NSURLIsExcludedFromBackupKey)
+            return getBoolResourceValue(URLResourceKey.isExcludedFromBackupKey.rawValue)
         }
         
         set {
             do {
-                try setResourceValue(newValue, forKey: NSURLIsExcludedFromBackupKey)
+                try setResourceValue(newValue as AnyObject?, forKey: URLResourceKey.isExcludedFromBackupKey)
             } catch {
                 print(error)
             }
@@ -98,7 +98,7 @@ public extension NSURL {
      */
     public var fileSize: NSNumber {
         if !isDirectory {
-            return getNSNumberResourceValue(NSURLFileSizeKey)
+            return getNSNumberResourceValue(URLResourceKey.fileSizeKey.rawValue)
         }
         
         return 0.NSNumberValue
@@ -109,9 +109,9 @@ public extension NSURL {
     /**
      A NSDate object that represents the resource’s creation date. (read-only)
      */
-    public var creationDate: NSDate {
+    public var creationDate: Date {
         get {
-            return getNSDateResourceValue(NSURLCreationDateKey)
+            return getNSDateResourceValue(URLResourceKey.creationDateKey.rawValue)
         }
     }
     
@@ -120,9 +120,9 @@ public extension NSURL {
     /**
      A NSDate object that represents the time at which the resource was most recently accessed. (read-only)
      */
-    public var lastAccessDate: NSDate {
+    public var lastAccessDate: Date {
         get {
-            return getNSDateResourceValue(NSURLContentAccessDateKey)
+            return getNSDateResourceValue(URLResourceKey.contentAccessDateKey.rawValue)
         }
     }
     
@@ -131,9 +131,9 @@ public extension NSURL {
     /**
      A NSDate object that represents the time at which the resource was most recently modified. (read-only)
      */
-    public var modificationDate: NSDate {
+    public var modificationDate: Date {
         get {
-            return getNSDateResourceValue(NSURLContentModificationDateKey)
+            return getNSDateResourceValue(URLResourceKey.contentModificationDateKey.rawValue)
         }
     }
     
@@ -150,10 +150,10 @@ public extension NSURL {
      
      - Returns: Valid string if value is successfully populated; otherwise, empty stirng("").
      */
-    private func getStringResourceValue(key: String) -> String {
-        var value: AnyObject? = ""
+    fileprivate func getStringResourceValue(_ key: String) -> String {
+        var value: AnyObject? = "" as AnyObject?
         do {
-            try getResourceValue(&value, forKey: key)
+            try getResourceValue(&value, forKey: URLResourceKey(rawValue: key))
         } catch { }
         
         if let str = value as? String {
@@ -172,10 +172,10 @@ public extension NSURL {
      
      - Returns: true if value is successfully populated; otherwise, false.
      */
-    private func getBoolResourceValue(key: String) -> Bool {
+    fileprivate func getBoolResourceValue(_ key: String) -> Bool {
         var value: AnyObject? = false.NSNumberValue
         do {
-            try getResourceValue(&value, forKey: key)
+            try getResourceValue(&value, forKey: URLResourceKey(rawValue: key))
         } catch { }
         
         if let numberValue = value as? NSNumber {
@@ -194,10 +194,10 @@ public extension NSURL {
      
      - Returns: Valid NSNumber object if value is successfully populated; otherwise, NSNumber object containing 0.
      */
-    private func getNSNumberResourceValue(key: String) -> NSNumber {
+    fileprivate func getNSNumberResourceValue(_ key: String) -> NSNumber {
         var value: AnyObject? = 0.NSNumberValue
         do {
-            try getResourceValue(&value, forKey: key)
+            try getResourceValue(&value, forKey: URLResourceKey(rawValue: key))
         } catch { }
         
         if let numberValue = value as? NSNumber {
@@ -216,16 +216,16 @@ public extension NSURL {
      
      - Returns: Valid NSDate object if value is successfully populated; otherwise, NSDate object set to 00:00:00 UTC on 1 January 1970.
      */
-    private func getNSDateResourceValue(key: String) -> NSDate {
-        var value: AnyObject? = NSDate(timeIntervalSince1970: 0)
+    fileprivate func getNSDateResourceValue(_ key: String) -> Date {
+        var value: AnyObject? = Date(timeIntervalSince1970: 0) as AnyObject?
         do {
-            try getResourceValue(&value, forKey: key)
+            try getResourceValue(&value, forKey: URLResourceKey(rawValue: key))
         } catch { }
         
-        if let date = value as? NSDate {
+        if let date = value as? Date {
             return date
         }
         
-        return NSDate(timeIntervalSince1970: 0)
+        return Date(timeIntervalSince1970: 0)
     }
 }

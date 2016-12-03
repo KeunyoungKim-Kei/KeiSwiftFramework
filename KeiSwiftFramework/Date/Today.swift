@@ -24,46 +24,46 @@
 
 import Foundation
 
-public class Today: NSDate {
-    public class var now: NSDate {
+open class Today: NSDate {
+    open class var now: NSDate {
         return NSDate()
     }
     
     
     
-    public class var startDate: NSDate {
+    open class var startDate: NSDate {
         return NSDate().removeTime()
     }
     
     
     
-    public class var endDate: NSDate {
+    open class var endDate: NSDate {
         return Today.startDate.endDateOfDay()
     }
     
     
     
-    public class func contains(date: NSDate) -> Bool {
+    open class func contains(_ date: NSDate) -> Bool {
         return startDate <= date && date <= endDate
     }
 }
 
 
 
-public class Yesterday: NSDate {
-    public class var startDate: NSDate {
+open class Yesterday: NSDate {
+    open class var startDate: NSDate {
         return KInterval.dateByAddingDays(-1, toDate: NSDate()).removeTime()
     }
     
     
     
-    public class var endDate: NSDate {
+    open class var endDate: NSDate {
         return Yesterday.startDate.endDateOfDay()
     }
     
     
     
-    public class func contains(date: NSDate) -> Bool {
+    open class func contains(_ date: NSDate) -> Bool {
         return startDate <= date && date <= endDate
     }
 }
@@ -71,20 +71,20 @@ public class Yesterday: NSDate {
 
 
 
-public class Tomorrow: NSDate {
-    public class var startDate: NSDate {
+open class Tomorrow: NSDate {
+    open class var startDate: NSDate {
         return KInterval.dateByAddingDays(1, toDate: NSDate()).removeTime()
     }
     
     
     
-    public class var endDate: NSDate {
+    open class var endDate: NSDate {
         return Tomorrow.startDate.endDateOfDay()
     }
     
     
     
-    public class func contains(date: NSDate) -> Bool {
+    open class func contains(_ date: NSDate) -> Bool {
         return startDate <= date && date <= endDate
     }
 }

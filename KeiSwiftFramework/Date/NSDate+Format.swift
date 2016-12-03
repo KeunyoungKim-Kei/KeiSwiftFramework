@@ -24,24 +24,24 @@
 
 import Foundation
 
-private let privateFormatter = NSDateFormatter()
+private let privateFormatter = DateFormatter()
 
 public extension NSDate {
-    public func toString(format: String = "yyyyMMdd") -> String {
+    public func toString(_ format: String = "yyyyMMdd") -> String {
         privateFormatter.dateFormat = format
-        return privateFormatter.stringFromDate(self)
+        return privateFormatter.string(from: self as Date)
     }
     
     
     
-    public func toLocalizedString(format: String, locale: NSLocale = NSLocale.currentLocale(), timeZone: NSTimeZone = NSTimeZone.defaultTimeZone()) -> String {
+    public func toLocalizedString(_ format: String, locale: Locale = Locale.current, timeZone: TimeZone = TimeZone.current) -> String {
         let currentLocale = privateFormatter.locale
         let currentTimeZone = privateFormatter.timeZone
         
         privateFormatter.locale = locale
         privateFormatter.timeZone = timeZone
         privateFormatter.dateFormat = format
-        let result = privateFormatter.stringFromDate(self)
+        let result = privateFormatter.string(from: self as Date)
         
         privateFormatter.locale = currentLocale
         privateFormatter.timeZone = currentTimeZone
@@ -51,16 +51,16 @@ public extension NSDate {
     
     
     
-    public func toStyledString(style: NSDateFormatterStyle) -> String {
+    public func toStyledString(_ style: DateFormatter.Style) -> String {
         privateFormatter.dateStyle = style
-        return privateFormatter.stringFromDate(self)
+        return privateFormatter.string(from: self as Date)
     }
     
     
     
-    public func toStyledString(dateStyle dStyle: NSDateFormatterStyle, timeStyle tStyle: NSDateFormatterStyle) -> String {
+    public func toStyledString(dateStyle dStyle: DateFormatter.Style, timeStyle tStyle: DateFormatter.Style) -> String {
         privateFormatter.dateStyle = dStyle
         privateFormatter.timeStyle = tStyle
-        return privateFormatter.stringFromDate(self)
+        return privateFormatter.string(from: self as Date)
     }
 }

@@ -24,24 +24,24 @@
 
 import Foundation
 
-public class KNotification {
-    public class func post(name: String, object: AnyObject? = nil) {
-        NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
+open class KNotification {
+    open class func post(_ name: String, object: AnyObject? = nil) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: object)
     }
     
     
     
-    public class func postDelayedOnMainQueue(name: String, delay: Double = 0.3, object: AnyObject? = nil) {
+    open class func postDelayedOnMainQueue(_ name: String, delay: Double = 0.3, object: AnyObject? = nil) {
         AsyncGCD.performDelayedOnMainQueue(delay) {
-            NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: object)
         }
     }
     
     
     
-    public class func postDelayedOnGlobalQueue(name: String, delay: Double = 0.3, object: AnyObject? = nil) {
+    open class func postDelayedOnGlobalQueue(_ name: String, delay: Double = 0.3, object: AnyObject? = nil) {
         AsyncGCD.performDelayedOnGlobalQueue(delay) {
-            NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: object)
         }
     }
 }

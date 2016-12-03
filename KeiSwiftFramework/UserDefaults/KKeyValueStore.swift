@@ -24,21 +24,21 @@
 
 import Foundation
 
-public class KKeyValueStore {
-    private class var store: NSUserDefaults {
-        return NSUserDefaults.standardUserDefaults()
+open class KKeyValueStore {
+    fileprivate class var store: UserDefaults {
+        return UserDefaults.standard
     }
     
     
     
-    public class func has(key: String) -> Bool {
-        return store.objectForKey(key) != nil
+    open class func has(_ key: String) -> Bool {
+        return store.object(forKey: key) != nil
     }
     
     
     
-    public class func save(value: AnyObject, forKey key: String, saveImmediately save: Bool = true) {
-        store.setObject(value, forKey: key)
+    open class func save(_ value: AnyObject, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -47,8 +47,8 @@ public class KKeyValueStore {
     
     
     
-    public class func value(key: String, defaultValue: AnyObject? = nil) -> AnyObject? {
-        guard let existValue = store.objectForKey(key) else {
+    open class func value(_ key: String, defaultValue: AnyObject? = nil) -> AnyObject? {
+        guard let existValue = store.object(forKey: key) else {
             if let value = defaultValue {
                 save(value, forKey: key)
             }
@@ -56,13 +56,13 @@ public class KKeyValueStore {
             return defaultValue
         }
         
-        return existValue
+        return existValue as AnyObject?
     }
     
     
     
-    public class func remove(key: String, saveImmediately save: Bool = true) {
-        store.removeObjectForKey(key)
+    open class func remove(_ key: String, saveImmediately save: Bool = true) {
+        store.removeObject(forKey: key)
         
         if save {
             store.synchronize()
@@ -76,8 +76,8 @@ public class KKeyValueStore {
     //
     // MARK: - String
     //
-    public class func saveString(value: String, forKey key: String, saveImmediately save: Bool = true) {
-        store.setObject(value, forKey: key)
+    open class func saveString(_ value: String, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -86,8 +86,8 @@ public class KKeyValueStore {
     
     
     
-    public class func stringValue(key: String, defaultValue: String? = nil) -> String? {
-        guard let existValue = store.objectForKey(key) as? String else {
+    open class func stringValue(_ key: String, defaultValue: String? = nil) -> String? {
+        guard let existValue = store.object(forKey: key) as? String else {
             if let value = defaultValue {
                 saveString(value, forKey: key)
             }
@@ -105,10 +105,10 @@ public class KKeyValueStore {
     //
     // MARK: - Number
     //
-    public class func numberValue(key: String, defaultValue: NSNumber? = nil) -> NSNumber? {
-        guard let existValue = store.objectForKey(key) as? NSNumber else {
+    open class func numberValue(_ key: String, defaultValue: NSNumber? = nil) -> NSNumber? {
+        guard let existValue = store.object(forKey: key) as? NSNumber else {
             if let value = defaultValue {
-                store.setObject(value, forKey: key)
+                store.set(value, forKey: key)
                 store.synchronize()
             }
             
@@ -120,8 +120,8 @@ public class KKeyValueStore {
     
     
     
-    public class func saveInteger(value: Int, forKey key: String, saveImmediately save: Bool = true) {
-        store.setInteger(value, forKey: key)
+    open class func saveInteger(_ value: Int, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -130,20 +130,20 @@ public class KKeyValueStore {
     
     
     
-    public class func integerValue(key: String, defaultValue: Int = 0) -> Int {
-        guard let existValue = store.objectForKey(key) as? NSNumber else {
+    open class func integerValue(_ key: String, defaultValue: Int = 0) -> Int {
+        guard let existValue = store.object(forKey: key) as? NSNumber else {
             saveInteger(defaultValue, forKey: key)
             
             return defaultValue
         }
         
-        return existValue.integerValue
+        return existValue.intValue
     }
     
     
     
-    public class func saveFloat(value: Float, forKey key: String, saveImmediately save: Bool = true) {
-        store.setFloat(value, forKey: key)
+    open class func saveFloat(_ value: Float, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -152,8 +152,8 @@ public class KKeyValueStore {
     
     
     
-    public class func floatValue(key: String, defaultValue: Float = 0.0) -> Float {
-        guard let existValue = store.objectForKey(key) as? NSNumber else {
+    open class func floatValue(_ key: String, defaultValue: Float = 0.0) -> Float {
+        guard let existValue = store.object(forKey: key) as? NSNumber else {
             saveFloat(defaultValue, forKey: key)
             
             return defaultValue
@@ -164,8 +164,8 @@ public class KKeyValueStore {
     
     
     
-    public class func saveDouble(value: Double, forKey key: String, saveImmediately save: Bool = true) {
-        store.setDouble(value, forKey: key)
+    open class func saveDouble(_ value: Double, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -174,8 +174,8 @@ public class KKeyValueStore {
     
     
     
-    public class func doubleValue(key: String, defaultValue: Double = 0.0) -> Double {
-        guard let existValue = store.objectForKey(key) as? NSNumber else {
+    open class func doubleValue(_ key: String, defaultValue: Double = 0.0) -> Double {
+        guard let existValue = store.object(forKey: key) as? NSNumber else {
             saveDouble(defaultValue, forKey: key)
             
             return defaultValue
@@ -186,20 +186,20 @@ public class KKeyValueStore {
     
     
     
-    public class func saveCGFloat(value: CGFloat, forKey key: String, saveImmediately save: Bool = true) {
+    open class func saveCGFloat(_ value: CGFloat, forKey key: String, saveImmediately save: Bool = true) {
         saveDouble(Double(value), forKey: key, saveImmediately: save)
     }
     
     
     
-    public class func CGFloatValue(key: String, defaultValue: CGFloat = 0.0) -> CGFloat {
+    open class func CGFloatValue(_ key: String, defaultValue: CGFloat = 0.0) -> CGFloat {
         return CGFloat(doubleValue(key, defaultValue: Double(defaultValue)))
     }
     
     
     
-    public class func saveBool(value: Bool, forKey key: String, saveImmediately save: Bool = true) {
-        store.setBool(value, forKey: key)
+    open class func saveBool(_ value: Bool, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -208,20 +208,20 @@ public class KKeyValueStore {
     
     
     
-    public class func saveTrue(key: String, saveImmediately save: Bool = true) {
+    open class func saveTrue(_ key: String, saveImmediately save: Bool = true) {
         saveBool(true, forKey: key, saveImmediately: save)
     }
     
     
     
-    public class func saveFalse(key: String, saveImmediately save: Bool = true) {
+    open class func saveFalse(_ key: String, saveImmediately save: Bool = true) {
         saveBool(false, forKey: key, saveImmediately: save)
     }
     
     
     
-    public class func boolValue(key: String, defaultValue: Bool = false) -> Bool {
-        guard let existValue = store.objectForKey(key) as? NSNumber else {
+    open class func boolValue(_ key: String, defaultValue: Bool = false) -> Bool {
+        guard let existValue = store.object(forKey: key) as? NSNumber else {
             saveBool(defaultValue, forKey: key)
             
             return defaultValue
@@ -232,13 +232,13 @@ public class KKeyValueStore {
     
     
     
-    public class func isTrue(key: String, defaultValue: Bool = false) -> Bool {
+    open class func isTrue(_ key: String, defaultValue: Bool = false) -> Bool {
         return boolValue(key, defaultValue: defaultValue) == true
     }
     
     
     
-    public class func isFalse(key: String, defaultValue: Bool = false) -> Bool {
+    open class func isFalse(_ key: String, defaultValue: Bool = false) -> Bool {
         return boolValue(key, defaultValue: defaultValue) == false
     }
     
@@ -249,8 +249,8 @@ public class KKeyValueStore {
     //
     // MARK: - Date
     //
-    public class func saveDate(value: NSDate, forKey key: String, saveImmediately save: Bool = true) {
-        store.setObject(value, forKey: key)
+    open class func saveDate(_ value: NSDate, forKey key: String, saveImmediately save: Bool = true) {
+        store.set(value, forKey: key)
         
         if save {
             store.synchronize()
@@ -259,25 +259,25 @@ public class KKeyValueStore {
     
     
     
-    public class func saveNow(key: String, saveImmediately save: Bool = true) {
+    open class func saveNow(_ key: String, saveImmediately save: Bool = true) {
         saveDate(Today.now, forKey: key, saveImmediately: save)
     }
     
     
     
-    public class func saveToday(key: String, saveImmediately save: Bool = true) {
+    open class func saveToday(_ key: String, saveImmediately save: Bool = true) {
         saveDate(Today.startDate, forKey: key, saveImmediately: save)
     }
     
     
     
-    public class func dateValue(key: String, defaultValue: NSDate = NSDate(timeIntervalSince1970: 0)) -> NSDate {
-        guard let existValue = store.objectForKey(key) as? NSDate else {
+    open class func dateValue(_ key: String, defaultValue: NSDate = NSDate(timeIntervalSince1970: 0)) -> NSDate {
+        guard let existValue = store.object(forKey: key) as? Date else {
             saveDate(defaultValue, forKey: key)
             
             return defaultValue
         }
         
-        return existValue
+        return existValue as NSDate
     }
 }

@@ -24,17 +24,19 @@
 
 import Foundation
 
+
+
 public func == (lhs: KDateRange, rhs: KDateRange) -> Bool {
-    return lhs.beginDate == rhs.beginDate && lhs.endDate == rhs.endDate
+    return (lhs.beginDate == rhs.beginDate) && (lhs.endDate == rhs.endDate)
 }
 
 public func != (lhs: KDateRange, rhs: KDateRange) -> Bool {
     return !(lhs == rhs)
 }
 
-public class KDateRange: NSObject {
-    public var beginDate: NSDate
-    public var endDate: NSDate
+open class KDateRange: NSObject {
+    open var beginDate: NSDate
+    open var endDate: NSDate
     
     public init(beginDate b: NSDate, endDate e: NSDate) {
         beginDate = b
@@ -45,10 +47,10 @@ public class KDateRange: NSObject {
     
     
     
-    public func containsDate(date: NSDate?, ignoreTime: Bool = true) -> Bool {
+    open func containsDate(_ date: NSDate?, ignoreTime: Bool = true) -> Bool {
         if ignoreTime {
             if let targetDate = date?.removeTime() {
-                if targetDate < beginDate.removeTime() || targetDate > endDate.removeTime() {
+                if (targetDate < beginDate.removeTime()) || (targetDate > endDate.removeTime()) {
                     return false
                 }
                 

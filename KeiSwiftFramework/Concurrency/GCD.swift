@@ -24,36 +24,36 @@
 
 import Foundation
 
-public class GCD {
-    public class var highPriority: Int {
-        return DISPATCH_QUEUE_PRIORITY_HIGH
+open class GCD {
+    open class var highPriority: DispatchQueue.GlobalQueuePriority {
+        return DispatchQueue.GlobalQueuePriority.high
     }
     
     
     
-    public class var defaultPriority: Int {
-        return DISPATCH_QUEUE_PRIORITY_DEFAULT
+    open class var defaultPriority: DispatchQueue.GlobalQueuePriority {
+        return DispatchQueue.GlobalQueuePriority.default
     }
     
     
     
-    public class var lowPriority: Int {
-        return DISPATCH_QUEUE_PRIORITY_LOW
+    open class var lowPriority: DispatchQueue.GlobalQueuePriority {
+        return DispatchQueue.GlobalQueuePriority.low
     }
     
     
     
-    public class var backgroundPriority: Int {
-        return DISPATCH_QUEUE_PRIORITY_BACKGROUND
+    open class var backgroundPriority: DispatchQueue.GlobalQueuePriority {
+        return DispatchQueue.GlobalQueuePriority.background
     }
 }
 
 
 
-public class AsyncGCD: GCD {
-    public class func performOnMainQueue(checkCurrentQueue: Bool = true, _ block: dispatch_block_t) {
+open class AsyncGCD: GCD {
+    open class func performOnMainQueue(_ checkCurrentQueue: Bool = true, _ block: @escaping ()->()) {
         if checkCurrentQueue {
-            if NSThread.isMainThread() {
+            if Thread.isMainThread {
                 block()
                 return
             }
@@ -64,12 +64,12 @@ public class AsyncGCD: GCD {
     
     
     
-    public class func performDelayedOnMainQueue(delay: Double = 0.0, _ block: dispatch_block_t) {
-        let queue = dispatch_get_main_queue()
+    open class func performDelayedOnMainQueue(_ delay: Double = 0.0, _ block: @escaping ()->()) {
+        let queue = DispatchQueue.main
         
         if delay > 0.0 {
-            let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-            dispatch_after(when, queue, block)
+            let when = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            queue.asyncAfter(deadline: when, execute: block)
         } else {
             performOnQueue(queue, block)
         }
@@ -77,18 +77,18 @@ public class AsyncGCD: GCD {
     
     
     
-    public class func performOnGlobalQueue(priority: Int = DISPATCH_QUEUE_PRIORITY_DEFAULT, _ block: dispatch_block_t) {
+    open class func performOnGlobalQueue(_ priority: DispatchQueue.GlobalQueuePriority = DispatchQueue.GlobalQueuePriority.default, _ block: @escaping ()->()) {
         performDelayedOnGlobalQueue(0.0, priority, block)
     }
     
     
     
-    public class func performDelayedOnGlobalQueue(delay: Double = 0.0, _ priority: Int = DISPATCH_QUEUE_PRIORITY_DEFAULT, _ block: dispatch_block_t) {
-        let queue = dispatch_get_global_queue(priority, 0)
+    open class func performDelayedOnGlobalQueue(_ delay: Double = 0.0, _ priority: DispatchQueue.GlobalQueuePriority = DispatchQueue.GlobalQueuePriority.default, _ block: @escaping ()->()) {
+        let queue = DispatchQueue.global(priority: priority)
         
         if delay > 0.0 {
-            let when = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-            dispatch_after(when, queue, block)
+            let when = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            queue.asyncAfter(deadline: when, execute: block)
         } else {
             performOnQueue(queue, block)
         }
@@ -96,7 +96,7 @@ public class AsyncGCD: GCD {
     
     
     
-    public class func performOnQueue(queue: dispatch_queue_t, _ block: dispatch_block_t) {
-        dispatch_async(queue, block)
+    open class func performOnQueue(_ queue: DispatchQueue, _ block: @escaping ()->()) {
+        queue.async(execute: block)
     }
 }

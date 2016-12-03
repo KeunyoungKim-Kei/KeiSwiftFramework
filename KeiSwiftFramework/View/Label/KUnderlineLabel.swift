@@ -24,14 +24,14 @@
 
 import UIKit
 
-@IBDesignable public class KUnderlineLabel: UIView {
-    private let label = UILabel()
-    private let underlineView = UIView()
-    private var userConstraint = [NSLayoutConstraint]()
+@IBDesignable open class KUnderlineLabel: UIView {
+    fileprivate let label = UILabel()
+    fileprivate let underlineView = UIView()
+    fileprivate var userConstraint = [NSLayoutConstraint]()
     
     
     
-    @IBInspectable public var text: String?  {
+    @IBInspectable open var text: String?  {
         didSet {
             label.text = text
         }
@@ -39,7 +39,7 @@ import UIKit
     
     
     
-    @IBInspectable public var topMargin: Double = 10 {
+    @IBInspectable open var topMargin: Double = 10 {
         didSet {
             setupView()
         }
@@ -47,7 +47,7 @@ import UIKit
     
     
     
-    @IBInspectable public var bottomMargin: Double = 10 {
+    @IBInspectable open var bottomMargin: Double = 10 {
         didSet {
             setupView()
         }
@@ -55,7 +55,7 @@ import UIKit
     
     
     
-    @IBInspectable public var underlineHidden: Bool = false {
+    @IBInspectable open var underlineHidden: Bool = false {
         didSet {
             setupView()
         }
@@ -63,15 +63,15 @@ import UIKit
     
     
     
-    @IBInspectable public var fontSize: CGFloat = 13 {
+    @IBInspectable open var fontSize: CGFloat = 13 {
         didSet {
-            label.font = UIFont.systemFontOfSize(fontSize)
+            label.font = UIFont.systemFont(ofSize: fontSize)
         }
     }
     
     
     
-    @IBInspectable public var textColor: UIColor = UIColor(red: 35.0/255.0, green: 39.0/255.0, blue: 57.0/255.0, alpha: 1.0) {
+    @IBInspectable open var textColor: UIColor = UIColor(red: 35.0/255.0, green: 39.0/255.0, blue: 57.0/255.0, alpha: 1.0) {
         didSet {
             label.textColor = textColor
         }
@@ -79,7 +79,7 @@ import UIKit
     
     
     
-    @IBInspectable public var underlineColor: UIColor = UIColor(red: 149.0/255.0, green: 150.0/255.0, blue: 156.0/255.0, alpha: 1.0) {
+    @IBInspectable open var underlineColor: UIColor = UIColor(red: 149.0/255.0, green: 150.0/255.0, blue: 156.0/255.0, alpha: 1.0) {
         didSet {
             underlineView.backgroundColor = underlineColor
         }
@@ -107,11 +107,11 @@ import UIKit
         }
         if userConstraint.count > 0 {
             removeConstraints(userConstraint)
-            userConstraint.removeAll(keepCapacity: false)
+            userConstraint.removeAll(keepingCapacity: false)
         }
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFontOfSize(fontSize)
+        label.font = UIFont.systemFont(ofSize: fontSize)
         label.textColor = textColor
         label.text = text
         
@@ -119,27 +119,27 @@ import UIKit
         
         if underlineHidden == false {
             underlineView.translatesAutoresizingMaskIntoConstraints = false
-            underlineView.userInteractionEnabled = false
+            underlineView.isUserInteractionEnabled = false
             underlineView.backgroundColor = underlineColor
             
             addSubview(underlineView)
         }
         
-        let metrics = ["top": NSNumber(double: topMargin), "bottom": NSNumber(double: bottomMargin)]
+        let metrics = ["top": NSNumber(value: topMargin as Double), "bottom": NSNumber(value: bottomMargin as Double)]
         let views = ["label": label, "underline": underlineView]
         
-        var horz = NSLayoutConstraint.constraintsWithVisualFormat("|[label]|", options: [], metrics: nil, views: views)
+        var horz = NSLayoutConstraint.constraints(withVisualFormat: "|[label]|", options: [], metrics: nil, views: views)
         addConstraints(horz)
         
         if underlineHidden {
-            let vert = NSLayoutConstraint.constraintsWithVisualFormat("V:|-top-[label]-bottom-|", options: [], metrics: metrics, views: views)
+            let vert = NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[label]-bottom-|", options: [], metrics: metrics, views: views)
             addConstraints(vert)
         }
         else {
-            horz = NSLayoutConstraint.constraintsWithVisualFormat("|[underline]|", options: [], metrics: nil, views: views)
+            horz = NSLayoutConstraint.constraints(withVisualFormat: "|[underline]|", options: [], metrics: nil, views: views)
             addConstraints(horz)
             
-            let vert = NSLayoutConstraint.constraintsWithVisualFormat("V:|-top-[label]-bottom-[underline(1)]|", options: [], metrics: metrics, views: views)
+            let vert = NSLayoutConstraint.constraints(withVisualFormat: "V:|-top-[label]-bottom-[underline(1)]|", options: [], metrics: metrics, views: views)
             addConstraints(vert)
         }
     }

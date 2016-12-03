@@ -44,6 +44,6 @@ public extension NSURL {
      Sets the receiver’s resource property for NSURLIsExcludedFromBackupKey key to true. It throws an error in cases of failure.     
      */
     public func addSkipBackupAttributeOrThrows() throws {
-        try setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)
+        try setResourceValue(true as AnyObject?, forKey: URLResourceKey.isExcludedFromBackupKey)
     }
 }

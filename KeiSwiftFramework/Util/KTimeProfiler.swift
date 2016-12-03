@@ -24,28 +24,28 @@
 
 import Foundation
 
-public class KTimeProfiler {
+open class KTimeProfiler {
     static let sharedInstance = KTimeProfiler()
     
-    var checkPoints = [(tag: String, time: NSTimeInterval)]()
+    var checkPoints = [(tag: String, time: TimeInterval)]()
     
     
     
-    public class func start() {
+    open class func start() {
         sharedInstance.checkPoints.removeAll()
         sharedInstance.checkPoints.append(("Start", Today.now.timeIntervalSince1970))
     }
     
     
     
-    public class func checkpoint(tag: String? = nil) {
+    open class func checkpoint(_ tag: String? = nil) {
         let checkPointTag = tag ?? "Checkpoint \(sharedInstance.checkPoints.count)"
         sharedInstance.checkPoints.append((checkPointTag, Today.now.timeIntervalSince1970))
     }
     
     
     
-    public class func report(verbose verbose: Bool = false, funcationName: String = #function) {
+    open class func report(verbose: Bool = false, funcationName: String = #function) {
         if sharedInstance.checkPoints.count < 1 {
             print("KTimeProfiler: Nothing to report. Start new session!")
             return
@@ -71,7 +71,7 @@ public class KTimeProfiler {
                 
                 var tag = item.tag
                 if tag.characters.count < maxLength {
-                    tag = item.tag.stringByPaddingToLength(maxLength, withString: " ", startingAtIndex: 0)
+                    tag = item.tag.padding(toLength: maxLength, withPad: " ", startingAt: 0)
                 }
                 
                 if item == sharedInstance.checkPoints.first! {
@@ -84,7 +84,7 @@ public class KTimeProfiler {
                 }
             }
             print("==================================================")
-            print("\("total".stringByPaddingToLength(maxLength, withString: " ", startingAtIndex: 0))  \(total)")
+            print("\("total".padding(toLength: maxLength, withPad: " ", startingAt: 0))  \(total)")
             print("==================================================")
         }
         

@@ -28,16 +28,16 @@ public var KDefaultAnimationDuration = 0.3
 
 
 
-public func animate(duration: NSTimeInterval = KDefaultAnimationDuration, animations: () -> Void) {
+public func animate(_ duration: TimeInterval = KDefaultAnimationDuration, animations: @escaping () -> Void) {
     AsyncGCD.performOnMainQueue {
-        UIView.animateWithDuration(duration, animations: animations)
+        UIView.animate(withDuration: duration, animations: animations)
     }
 }
 
 
 
 public extension UIView {
-    public class func animate(duration: NSTimeInterval = KDefaultAnimationDuration, animations: () -> Void) {
-        UIView.animateWithDuration(duration, animations: animations)
+    public class func animate(_ duration: TimeInterval = KDefaultAnimationDuration, animations: @escaping () -> Void) {
+        UIView.animate(withDuration: duration, animations: animations)
     }
 }

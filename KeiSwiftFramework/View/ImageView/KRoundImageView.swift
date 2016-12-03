@@ -24,8 +24,8 @@
 
 import UIKit
 
-@IBDesignable public class KRoundImageView: UIImageView {
-    @IBInspectable public var cornerRadius: CGFloat = 10 {
+@IBDesignable open class KRoundImageView: UIImageView {
+    @IBInspectable open var cornerRadius: CGFloat = 10 {
         didSet {
             setupView()
         }
@@ -33,7 +33,7 @@ import UIKit
     
     
     
-    @IBInspectable public var borderWidth: CGFloat = 0 {
+    @IBInspectable open var borderWidth: CGFloat = 0 {
         didSet {
             setupView()
         }
@@ -41,7 +41,7 @@ import UIKit
     
     
     
-    @IBInspectable public var borderColor: UIColor = UIColor.clearColor() {
+    @IBInspectable open var borderColor: UIColor = UIColor.clear {
         didSet {
             setupView()
         }
@@ -66,7 +66,7 @@ import UIKit
     func setupView() {
         layer.cornerRadius = cornerRadius
         layer.borderWidth = borderWidth
-        layer.borderColor = borderColor.CGColor
+        layer.borderColor = borderColor.cgColor
         clipsToBounds = true
     }
 }

@@ -24,22 +24,22 @@
 
 import UIKit
 
-public class KIndexPathButton: UIButton {
-    public var indexPath: NSIndexPath?
+open class KIndexPathButton: UIButton {
+    open var indexPath: IndexPath?
 }
 
-public class KIndexPathSwitch: UISwitch {
-    public var indexPath: NSIndexPath?
+open class KIndexPathSwitch: UISwitch {
+    open var indexPath: IndexPath?
 }
 
-public class KIndexPathTextField: UITextField {
-    public var indexPath: NSIndexPath?
+open class KIndexPathTextField: UITextField {
+    open var indexPath: IndexPath?
 }
 
-public class KIndexPathSlider: UISlider {
-    public var indexPath: NSIndexPath?
+open class KIndexPathSlider: UISlider {
+    open var indexPath: IndexPath?
 }
 
-public class KIndexPathProgressView: UIProgressView {
-    public var indexPath: NSIndexPath?
+open class KIndexPathProgressView: UIProgressView {
+    open var indexPath: IndexPath?
 }

@@ -25,19 +25,19 @@
 import Foundation
 
 public extension String {
-    public func estimatedHeight(width: CGFloat, font: UIFont) -> CGFloat {
+    public func estimatedHeight(_ width: CGFloat, font: UIFont) -> CGFloat {
         let s = NSString(string: self)
         let attrs = [NSFontAttributeName: font]
-        let rect = s.boundingRectWithSize(CGSize(width: width, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attrs, context: nil)
+        let rect = s.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attrs, context: nil)
         return ceil(rect.height)
     }
     
     
     
-    public func estimatedWidth(font: UIFont) -> CGFloat {
+    public func estimatedWidth(_ font: UIFont) -> CGFloat {
         let s = NSString(string: self)
         let attrs = [NSFontAttributeName: font]
-        let rect = s.boundingRectWithSize(CGSize(width: 1000, height: CGFloat.max), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: attrs, context: nil)
+        let rect = s.boundingRect(with: CGSize(width: 1000, height: CGFloat.greatestFiniteMagnitude), options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attrs, context: nil)
         return ceil(rect.width)
     }
 }

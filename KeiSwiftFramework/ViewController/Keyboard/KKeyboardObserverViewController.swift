@@ -22,28 +22,28 @@
 //  THE SOFTWARE.
 //
 
-public class KKeyboardObserverViewController: KViewController {
+open class KKeyboardObserverViewController: KViewController {
     
-    public var keyboardFrame: CGRect = CGRectZero
-    public var keyboardAnimationDuration: CGFloat = 0.3
+    open var keyboardFrame: CGRect = CGRect.zero
+    open var keyboardAnimationDuration: CGFloat = 0.3
     
-    public lazy var keyboardHideTapGesture: UITapGestureRecognizer = {
+    open lazy var keyboardHideTapGesture: UITapGestureRecognizer = {
         return UITapGestureRecognizer(target: self, action: #selector(KKeyboardObserverViewController.handleTapGuesture(_:)))
     }()
     
-    public var inputTargetView: UIView?
+    open var inputTargetView: UIView?
     
     
-    public func onKeyboardWillShow() {
+    open func onKeyboardWillShow() {
         
     }
     
-    public func onKeyboardWillHide() {
+    open func onKeyboardWillHide() {
         
     }
     
     
-    public func attachTapGesture(view: UIView) {
+    open func attachTapGesture(_ view: UIView) {
         view.addGestureRecognizer(keyboardHideTapGesture)
     }
     
@@ -52,7 +52,7 @@ public class KKeyboardObserverViewController: KViewController {
     //
     // MARK: - Tap Gesture
     //
-    func handleTapGuesture(tap: UITapGestureRecognizer) {
+    func handleTapGuesture(_ tap: UITapGestureRecognizer) {
         findFirstResponderAndResign()
     }
     
@@ -63,27 +63,27 @@ public class KKeyboardObserverViewController: KViewController {
     //
     // MARK: - Notification
     //
-    public override func handleNotification(noti: NSNotification) {
+    open override func handleNotification(_ noti: Notification) {
         super.handleNotification(noti)
         
         switch noti.name {
-        case UIKeyboardWillShowNotification:
+        case NSNotification.Name.UIKeyboardWillShow:
             if let info = noti.userInfo {
-                keyboardFrame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+                keyboardFrame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
                 keyboardAnimationDuration = CGFloat((info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).floatValue)
                 
-                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                DispatchQueue.main.async(execute: { [weak self] () -> Void in
                     self?.onKeyboardWillShow()
                     })
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(keyboardAnimationDuration * CGFloat(NSEC_PER_SEC))), dispatch_get_main_queue(), { [weak self] () -> Void in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(keyboardAnimationDuration * CGFloat(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: { [weak self] () -> Void in
                     self?.inputTargetView = self?.findFirstResponder()
                     })
             }
-        case UIKeyboardWillHideNotification:
+        case NSNotification.Name.UIKeyboardWillHide:
             inputTargetView = nil
             
-            dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+            DispatchQueue.main.async(execute: { [weak self] () -> Void in
                 self?.onKeyboardWillHide()
                 })
         default:
@@ -98,15 +98,15 @@ public class KKeyboardObserverViewController: KViewController {
     //
     // MARK: - VC Life Cycle
     //
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
-        registerNotifications([UIKeyboardWillShowNotification, UIKeyboardWillHideNotification])
+        registerNotifications([NSNotification.Name.UIKeyboardWillShow.rawValue, NSNotification.Name.UIKeyboardWillHide.rawValue])
     }
     
     
     
-    public override func viewWillDisappear(animated: Bool) {
+    open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         findFirstResponderAndResign()

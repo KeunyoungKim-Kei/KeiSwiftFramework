@@ -26,18 +26,18 @@ import Foundation
 
 public extension String {
     public func removeWhiteSpace() -> String {
-        return stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        return trimmingCharacters(in: CharacterSet.whitespaces)
     }
     
     
     
-    public static func randomStringWithLength (len : Int, letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") -> String {
+    public static func randomStringWithLength (_ len : Int, letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") -> String {
         let randomString : NSMutableString = NSMutableString(capacity: len)
         
         for _ in 0 ..< len {
             let length = UInt32 (letters.length)
             let rand = arc4random_uniform(length)
-            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+            randomString.appendFormat("%C", letters.character(at: Int(rand)))
         }
         
         return randomString as String

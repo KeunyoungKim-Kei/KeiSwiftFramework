@@ -27,6 +27,6 @@ import Foundation
 // Commonly Used Blocks
 
 public typealias KSimpleBlock = () -> Void
-public typealias KSimpleResultBlock = (success: Bool) -> Void
+public typealias KSimpleResultBlock = (_ success: Bool) -> Void
 public typealias UIViewAnimationBlock = () -> Void
-public typealias UIViewAnimationCompletionBlock = ((finished: Bool) -> Void)?
+public typealias UIViewAnimationCompletionBlock = ((_ finished: Bool) -> Void)?

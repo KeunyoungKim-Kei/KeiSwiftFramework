@@ -39,8 +39,8 @@ public extension String {
             return false
         }
         
-        let notAHexCharSet = NSCharacterSet(charactersInString: "0123456789ABCDEFabcdef#").invertedSet
-        if let _ = rangeOfCharacterFromSet(notAHexCharSet) {
+        let notAHexCharSet = CharacterSet(charactersIn: "0123456789ABCDEFabcdef#").inverted
+        if let _ = rangeOfCharacter(from: notAHexCharSet) {
             return false
         }
         
@@ -51,23 +51,23 @@ public extension String {
     
     public var redComponent: CGFloat? {
         if isHexColorString {
-            var range: Range<Index>?
+            var range: ClosedRange<String.Index>?
             
             switch characters.count {
             case 4:
-                range = startIndex.advancedBy(1)...startIndex.advancedBy(1)
+                range = characters.index(startIndex, offsetBy: 1)...characters.index(startIndex, offsetBy: 1)
             case 5:
-                range = startIndex.advancedBy(2)...startIndex.advancedBy(2)
+                range = characters.index(startIndex, offsetBy: 2)...characters.index(startIndex, offsetBy: 2)
             case 7:
-                range = startIndex.advancedBy(1)...startIndex.advancedBy(2)
+                range = characters.index(startIndex, offsetBy: 1)...characters.index(startIndex, offsetBy: 2)
             case 9:
-                range = startIndex.advancedBy(3)...startIndex.advancedBy(4)
+                range = characters.index(startIndex, offsetBy: 3)...characters.index(startIndex, offsetBy: 4)
             default:
                 break
             }
             
             if let componentRange = range {
-                return parseHex(componentRange)
+                return parseHex(Range<String.Index>(uncheckedBounds: (componentRange.lowerBound, componentRange.upperBound)))
             }
         }
         
@@ -78,23 +78,23 @@ public extension String {
     
     public var greenComponent: CGFloat? {
         if isHexColorString {
-            var range: Range<Index>?
+            var range: ClosedRange<String.Index>?
             
             switch characters.count {
             case 4:
-                range = startIndex.advancedBy(2)...startIndex.advancedBy(2)
+                range = characters.index(startIndex, offsetBy: 2)...characters.index(startIndex, offsetBy: 2)
             case 5:
-                range = startIndex.advancedBy(3)...startIndex.advancedBy(3)
+                range = characters.index(startIndex, offsetBy: 3)...characters.index(startIndex, offsetBy: 3)
             case 7:
-                range = startIndex.advancedBy(3)...startIndex.advancedBy(4)
+                range = characters.index(startIndex, offsetBy: 3)...characters.index(startIndex, offsetBy: 4)
             case 9:
-                range = startIndex.advancedBy(5)...startIndex.advancedBy(6)
+                range = characters.index(startIndex, offsetBy: 5)...characters.index(startIndex, offsetBy: 6)
             default:
                 break
             }
             
             if let componentRange = range {
-                return parseHex(componentRange)
+                return parseHex(Range<String.Index>(uncheckedBounds: (componentRange.lowerBound, componentRange.upperBound)))
             }
         }
         
@@ -105,23 +105,23 @@ public extension String {
     
     public var blueComponent: CGFloat? {
         if isHexColorString {
-            var range: Range<Index>?
+            var range: ClosedRange<String.Index>?
             
             switch characters.count {
             case 4:
-                range = startIndex.advancedBy(3)...startIndex.advancedBy(3)
+                range = characters.index(startIndex, offsetBy: 3)...characters.index(startIndex, offsetBy: 3)
             case 5:
-                range = startIndex.advancedBy(4)...startIndex.advancedBy(4)
+                range = characters.index(startIndex, offsetBy: 4)...characters.index(startIndex, offsetBy: 4)
             case 7:
-                range = startIndex.advancedBy(5)...startIndex.advancedBy(6)
+                range = characters.index(startIndex, offsetBy: 5)...characters.index(startIndex, offsetBy: 6)
             case 9:
-                range = startIndex.advancedBy(7)...startIndex.advancedBy(8)
+                range = characters.index(startIndex, offsetBy: 7)...characters.index(startIndex, offsetBy: 8)
             default:
                 break
             }
             
             if let componentRange = range {
-                return parseHex(componentRange)
+                return parseHex(Range<String.Index>(uncheckedBounds: (componentRange.lowerBound, componentRange.upperBound)))
             }
         }
         
@@ -132,19 +132,19 @@ public extension String {
     
     public var alphaComponent: CGFloat? {
         if isHexColorString {
-            var range: Range<Index>?
+            var range: ClosedRange<String.Index>?
             
             switch characters.count {
             case 5:
-                range = startIndex.advancedBy(1)...startIndex.advancedBy(1)
+                range = index(startIndex, offsetBy: 1)...index(startIndex, offsetBy: 1)
             case 9:
-                range = startIndex.advancedBy(1)...startIndex.advancedBy(2)
+                range = index(startIndex, offsetBy: 1)...index(startIndex, offsetBy: 2)
             default:
                 break
             }
             
             if let componentRange = range {
-                return parseHex(componentRange)
+                return parseHex(Range<String.Index>(uncheckedBounds: (componentRange.lowerBound, componentRange.upperBound)))
             }
         }
         
@@ -165,7 +165,7 @@ public extension String {
     public func parseHexColorString() -> UIColor? {
         let a = alphaComponent ?? 255
         
-        if let r = redComponent, g = greenComponent, b = blueComponent {
+        if let r = redComponent, let g = greenComponent, let b = blueComponent {
             return UIColor(red: r/255, green: g/255, blue: b/255, alpha: a/255)
         }
         
@@ -174,15 +174,15 @@ public extension String {
     
     
     
-    private func parseHex(range: Range<Index>) -> CGFloat? {
-        var value = substringWithRange(range)
+    fileprivate func parseHex(_ range: Range<Index>) -> CGFloat? {
+        var value = substring(with: range)
         if value.characters.count == 1 {
             value = value + value
         }
         
         var result: UInt32 = 0
-        let scanner = NSScanner(string: value)
-        if scanner.scanHexInt(&result) {
+        let scanner = Scanner(string: value)
+        if scanner.scanHexInt32(&result) {
             return CGFloat(result)
         }
         

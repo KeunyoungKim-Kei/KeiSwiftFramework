@@ -27,22 +27,22 @@ import UIKit
 public extension KViewController {
     public var viewSnapshot: UIImage {
         UIGraphicsBeginImageContextWithOptions(view.bounds.size, true, 0)
-        view.drawViewHierarchyInRect(view.bounds, afterScreenUpdates: false)
+        view.drawHierarchy(in: view.bounds, afterScreenUpdates: false)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return image
+        return image!
     }
     
     
     
-    public func generateSnapshot(target: UIView?, opaque: Bool = true, scale: CGFloat = 0, afterScreenUpdates: Bool = false) -> UIImage? {
+    public func generateSnapshot(_ target: UIView?, opaque: Bool = true, scale: CGFloat = 0, afterScreenUpdates: Bool = false) -> UIImage? {
         guard let v = target else {
             return nil
         }
         
         UIGraphicsBeginImageContextWithOptions(v.bounds.size, opaque, scale)
-        v.drawViewHierarchyInRect(v.bounds, afterScreenUpdates: afterScreenUpdates)
+        v.drawHierarchy(in: v.bounds, afterScreenUpdates: afterScreenUpdates)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

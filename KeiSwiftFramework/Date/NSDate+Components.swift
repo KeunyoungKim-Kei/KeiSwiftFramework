@@ -24,43 +24,43 @@
 
 import Foundation
 
-public let SECOND: NSTimeInterval   = 1
-public let MINUTE: NSTimeInterval   = 60
-public let HOUR: NSTimeInterval     = MINUTE * 60
-public let DAY: NSTimeInterval      = HOUR * 24
-public let WEEK: NSTimeInterval     = DAY * 7
-public let YEAR: NSTimeInterval     = DAY * 365
+public let SECOND: TimeInterval   = 1
+public let MINUTE: TimeInterval   = 60
+public let HOUR: TimeInterval     = MINUTE * 60
+public let DAY: TimeInterval      = HOUR * 24
+public let WEEK: TimeInterval     = DAY * 7
+public let YEAR: TimeInterval     = DAY * 365
 
 public enum KDay: Int {
-    case Day1 = 1, Day2, Day3, Day4, Day5, Day6, Day7, Day8, Day9
-    case Day10, Day11, Day12, Day13, Day14, Day15, Day16, Day17, Day18, Day19
-    case Day20, Day21, Day22, Day23, Day24, Day25, Day26, Day27, Day28, Day29
-    case Day30, Day31
+    case day1 = 1, day2, day3, day4, day5, day6, day7, day8, day9
+    case day10, day11, day12, day13, day14, day15, day16, day17, day18, day19
+    case day20, day21, day22, day23, day24, day25, day26, day27, day28, day29
+    case day30, day31
 }
 
 public enum KWeekday: Int {
-    case Sunday = 1
-    case Monday
-    case Tuesday
-    case Wednesday
-    case Thursday
-    case Friday
-    case Saturday
+    case sunday = 1
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
 }
 
 public enum KMonth: Int {
-    case January = 1
-    case February
-    case March
-    case April
-    case May
-    case June
-    case July
-    case August
-    case September
-    case October
-    case Novermber
-    case December
+    case january = 1
+    case february
+    case march
+    case april
+    case may
+    case june
+    case july
+    case august
+    case september
+    case october
+    case novermber
+    case december
 }
 
 public extension NSDate {
@@ -68,9 +68,9 @@ public extension NSDate {
      The number of era units for **self**.
      */
     public var era: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Era], fromDate: self)
-        return components.era
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.era], from: self as Date)
+        return components.era!
     }
     
     
@@ -79,9 +79,9 @@ public extension NSDate {
      The number of year units for **self**.
      */
     public var year: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year], fromDate: self)
-        return components.year
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.year], from: self as Date)
+        return components.year!
     }
     
     
@@ -90,9 +90,9 @@ public extension NSDate {
      The number of month units for **self**.
      */
     public var month: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Month], fromDate: self)
-        return components.month
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.month], from: self as Date)
+        return components.month!
     }
     
     
@@ -101,9 +101,9 @@ public extension NSDate {
      The number of day units for **self**.
      */
     public var day: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day], fromDate: self)
-        return components.day
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.day], from: self as Date)
+        return components.day!
     }
     
     
@@ -112,9 +112,9 @@ public extension NSDate {
      The number of hour units for **self**.
      */
     public var hour: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Hour], fromDate: self)
-        return components.hour
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.hour], from: self as Date)
+        return components.hour!
     }
     
     
@@ -123,9 +123,9 @@ public extension NSDate {
      The number of minute units for **self**.
      */
     public var minute: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Minute], fromDate: self)
-        return components.minute
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.minute], from: self as Date)
+        return components.minute!
     }
     
     
@@ -134,9 +134,9 @@ public extension NSDate {
      The number of second units for **self**.
      */
     public var second: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Second], fromDate: self)
-        return components.second
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.second], from: self as Date)
+        return components.second!
     }
     
     
@@ -144,9 +144,9 @@ public extension NSDate {
      The number of the weekday unit for **self**.
      */
     public var weekday: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Weekday], fromDate: self)
-        return components.weekday
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.weekday], from: self as Date)
+        return components.weekday!
     }
     
     
@@ -155,9 +155,9 @@ public extension NSDate {
      The ordinal number of weekday units for **self**.
      */
     public var weekdayOrdinal: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.WeekdayOrdinal], fromDate: self)
-        return components.weekdayOrdinal
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.weekdayOrdinal], from: self as Date)
+        return components.weekdayOrdinal!
     }
     
     
@@ -166,9 +166,9 @@ public extension NSDate {
      The number of quarters for **self**.
      */
     public var quarter: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Quarter], fromDate: self)
-        return components.quarter
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.quarter], from: self as Date)
+        return components.quarter!
     }
     
     
@@ -177,19 +177,19 @@ public extension NSDate {
      The ISO 8601 week date of the year for **self**.
      */
     public var weekOfYear: Int {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.WeekOfYear], fromDate: self)
-        return components.weekOfYear
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.weekOfYear], from: self as Date)
+        return components.weekOfYear!
     }
     
     
     
     public func removeTime() -> NSDate! {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year, .Month, .Day], fromDate: self)
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: self as Date)
         
-        let result = NSDateComponents()
-        result.timeZone = calendar.timeZone
+        var result = DateComponents()
+        (result as NSDateComponents).timeZone = calendar.timeZone
         result.year = components.year
         result.month = components.month
         result.day = components.day
@@ -197,7 +197,7 @@ public extension NSDate {
         result.minute = 0
         result.second = 0
         
-        return calendar.dateFromComponents(result)
+        return calendar.date(from: result)! as NSDate
     }
     
     
@@ -210,19 +210,19 @@ public extension NSDate {
     
     public func endDateOfDay() -> NSDate {
         let start = startDateOfDay()
-        let tomorrow = KInterval.dateByAddingDays(1, toDate: start)
+        let tomorrow = KInterval.dateByAddingDays(1, toDate: start as NSDate)
         
-        return KInterval.dateByAddingSeconds(-1, toDate: tomorrow)
+        return KInterval.dateByAddingSeconds(-1, toDate: tomorrow as NSDate)
     }
     
     
     
     public func startDateOfMonth() -> NSDate! {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year, .Month], fromDate: self)
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.year, .month], from: self as Date)
         
-        let result = NSDateComponents()
-        result.timeZone = calendar.timeZone
+        var result = DateComponents()
+        (result as NSDateComponents).timeZone = calendar.timeZone
         result.year = components.year
         result.month = components.month
         result.day = 1
@@ -230,33 +230,33 @@ public extension NSDate {
         result.minute = 0
         result.second = 0
         
-        return calendar.dateFromComponents(result)
+        return calendar.date(from: result) as NSDate!
     }
     
     
-    public func addMonths(months: Int = 1) -> NSDate! {
-        let calendar = NSCalendar.currentCalendar()
-        let components = NSDateComponents()
+    public func addMonths(_ months: Int = 1) -> Date! {
+        let calendar = NSCalendar.current
+        var components = DateComponents()
         components.month = months
-        
-        return calendar.dateByAddingComponents(components, toDate: self, options: [])
+                        
+        return calendar.date(byAdding: components, to: self as Date)
     }
     
     
     
-    public func nextMonth() -> NSDate! {
+    public func nextMonth() -> Date! {
         return addMonths()
     }
     
     
     
-    public func lastMonth() -> NSDate! {
+    public func lastMonth() -> Date! {
         return addMonths(-1)
     }
     
     
     
-    public class func zeroDate() -> NSDate {
-        return NSDate(timeIntervalSince1970: 0)
+    public static func zeroDate() -> Date {
+        return Date(timeIntervalSince1970: 0)
     }
 }

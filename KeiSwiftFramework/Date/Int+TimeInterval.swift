@@ -25,31 +25,31 @@
 import Foundation
 
 extension Int {
-    public var second: NSTimeInterval {
+    public var second: TimeInterval {
         return Double(self) * SECOND
     }
     
-    public var minute: NSTimeInterval {
+    public var minute: TimeInterval {
         return Double(self) * MINUTE
     }
     
-    public var hour: NSTimeInterval {
+    public var hour: TimeInterval {
         return Double(self) * HOUR
     }
     
-    public var day: NSTimeInterval {
+    public var day: TimeInterval {
         return Double(self) * DAY
     }
     
-    public var year: NSTimeInterval {
+    public var year: TimeInterval {
         return Double(self) * YEAR
     }
     
-    public var secondInterval: NSTimeInterval {
+    public var secondInterval: TimeInterval {
         return Double(self) * SECOND
     }
     
-    public var minuteInterval: NSTimeInterval {
+    public var minuteInterval: TimeInterval {
         if self > 0 {
             return Double(self) / MINUTE
         }
@@ -57,7 +57,7 @@ extension Int {
         return Double(self)
     }
     
-    public var hourInterval: NSTimeInterval {
+    public var hourInterval: TimeInterval {
         if self > 0 {
             return Double(self) / HOUR
         }
@@ -65,7 +65,7 @@ extension Int {
         return Double(self)
     }
     
-    public var dayInterval: NSTimeInterval {
+    public var dayInterval: TimeInterval {
         if self > 0 {
             return Double(self) / DAY
         }
@@ -73,7 +73,7 @@ extension Int {
         return Double(self)
     }
     
-    public func toString(format: String) -> String {
+    public func toString(_ format: String) -> String {
         return String(format: format, self)
     }
 }

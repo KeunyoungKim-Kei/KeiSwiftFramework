@@ -25,29 +25,29 @@
 import UIKit
 import CoreTelephony
 
-public class KDevice {
-    public class var mainScreenWidth: CGFloat {
-        return UIScreen.mainScreen().bounds.width
+open class KDevice {
+    open class var mainScreenWidth: CGFloat {
+        return UIScreen.main.bounds.width
     }
     
     
     
-    public class var mainScreenHeight: CGFloat {
-        return UIScreen.mainScreen().bounds.height
+    open class var mainScreenHeight: CGFloat {
+        return UIScreen.main.bounds.height
     }
     
     
     
-    public class var mainScreenBounds: CGRect {
-        return UIScreen.mainScreen().bounds
+    open class var mainScreenBounds: CGRect {
+        return UIScreen.main.bounds
     }
     
     
     
     class func canPhoneCall() -> Bool {
         var canCall = false
-        let url = NSURL(string: "tel://")
-        if UIApplication.sharedApplication().canOpenURL(url!) {
+        let url = URL(string: "tel://")
+        if UIApplication.shared.canOpenURL(url!) {
             let info = CTTelephonyNetworkInfo()
             guard let carrier = info.subscriberCellularProvider else {
                 return canCall

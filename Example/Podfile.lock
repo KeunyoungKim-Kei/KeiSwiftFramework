@@ -1,0 +1,14 @@
+PODS:
+  - KeiSwiftFramework (0.3.0)
+
+DEPENDENCIES:
+  - KeiSwiftFramework (from `../`)
+
+EXTERNAL SOURCES:
+  KeiSwiftFramework:
+    :path: ../
+
+SPEC CHECKSUMS:
+  KeiSwiftFramework: 0ad58fa4b8ef26755c260c42751b0f253d6ba2ab
+
+COCOAPODS: 0.39.0

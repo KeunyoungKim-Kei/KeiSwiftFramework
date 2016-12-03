@@ -22,16 +22,16 @@
 //  THE SOFTWARE.
 //
 
-public class KUserDefaultsSwitch: UISwitch {
-    public override var on: Bool {
+open class KUserDefaultsSwitch: UISwitch {
+    open override var isOn: Bool {
         didSet {
             if let key = userDefaultsKey {
-                KKeyValueStore.saveBool(on, forKey: key)
+                KKeyValueStore.saveBool(isOn, forKey: key)
             }
         }
     }
     
-    @IBInspectable public var userDefaultsKey: String? = nil {
+    @IBInspectable open var userDefaultsKey: String? = nil {
         didSet {
             update()
         }
@@ -50,7 +50,7 @@ public class KUserDefaultsSwitch: UISwitch {
     }
     
     
-    public override func setOn(on: Bool, animated: Bool) {
+    open override func setOn(_ on: Bool, animated: Bool) {
         super.setOn(on, animated: animated)
         
         if let key = userDefaultsKey {
@@ -58,7 +58,7 @@ public class KUserDefaultsSwitch: UISwitch {
         }
     }
     
-    public func update(animated: Bool = true) {
+    open func update(_ animated: Bool = true) {
         if let key = userDefaultsKey {
             let isTrue = KKeyValueStore.boolValue(key)
             print("UPDATE with \(key) \(isTrue)")

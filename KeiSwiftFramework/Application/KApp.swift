@@ -28,15 +28,15 @@ import CoreData
 private let K_FIRST_LAUNCHING_AFTER_INSTALL = "K_FIRST_LAUNCHING_AFTER_INSTALL"
 private let K_LAST_LAUNCH_DATE = "K_LAST_LAUNCH_DATE"
 
-public class KApp: UIResponder, UIApplicationDelegate {
-    public var window: UIWindow?
+open class KApp: UIResponder, UIApplicationDelegate {
+    open var window: UIWindow?
     
-    public class var runningOnSimulator: Bool {
+    open class var runningOnSimulator: Bool {
         return TARGET_OS_SIMULATOR != 0
     }
     
-    public var isFirstLaunchAfterInstall = false
-    public var lastLaunchDate: NSDate {
+    open var isFirstLaunchAfterInstall = false
+    open var lastLaunchDate: NSDate {
         get {
             return KKeyValueStore.dateValue(K_LAST_LAUNCH_DATE, defaultValue: Today.now)
         }
@@ -46,14 +46,14 @@ public class KApp: UIResponder, UIApplicationDelegate {
         }
     }
     
-    public var secondsFromLastLaunch: NSTimeInterval = 0
+    open var secondsFromLastLaunch: TimeInterval = 0
     
     
     /////////////////////////////////////////////////////////////////////
     //
     // MARK: - Life Cycle
     //
-    public func application(application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+    open func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         isFirstLaunchAfterInstall = KKeyValueStore.boolValue(K_FIRST_LAUNCHING_AFTER_INSTALL, defaultValue: true)
         
         if isFirstLaunchAfterInstall {
@@ -77,12 +77,12 @@ public class KApp: UIResponder, UIApplicationDelegate {
     //
     // MARK: - Notification
     //
-    public func registerForNotifications(forTypes types: UIUserNotificationType = [.Alert, .Badge, .Sound], categories: Set<UIUserNotificationCategory>? = nil) {
+    open func registerForNotifications(forTypes types: UIUserNotificationType = [.alert, .badge, .sound], categories: Set<UIUserNotificationCategory>? = nil) {
         deviceTokenString = nil
         
-        let settings = UIUserNotificationSettings(forTypes: types, categories: categories)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        UIApplication.sharedApplication().registerForRemoteNotifications()
+        let settings = UIUserNotificationSettings(types: types, categories: categories)
+        UIApplication.shared.registerUserNotificationSettings(settings)
+        UIApplication.shared.registerForRemoteNotifications()
     }
     
     
@@ -92,17 +92,17 @@ public class KApp: UIResponder, UIApplicationDelegate {
     //
     // MARK: - Remote Notification
     //
-    public var deviceTokenString: String?
-    public var pushNotificationRegistered: Bool {
+    open var deviceTokenString: String?
+    open var pushNotificationRegistered: Bool {
         return deviceTokenString != nil
     }
     
-    public func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken token: NSData) {
-        let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
+    open func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken token: Data) {
+        let characterSet: CharacterSet = CharacterSet( charactersIn: "<>" )
         
         let tokenString: String = ( token.description as NSString )
-            .stringByTrimmingCharactersInSet( characterSet )
-            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+            .trimmingCharacters( in: characterSet )
+            .replacingOccurrences( of: " ", with: "" ) as String
         
         deviceTokenString = tokenString
     }
@@ -114,36 +114,36 @@ public class KApp: UIResponder, UIApplicationDelegate {
     //
     // MARK: - Commonly Used Directories
     //
-    public static var documentsDirectoryURL: NSURL {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    open static var documentsDirectoryURL: URL {
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return urls.last!
     }
     
     
     
-    public static var libraryDirectoryURL: NSURL {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.LibraryDirectory, inDomains: .UserDomainMask)
+    open static var libraryDirectoryURL: URL {
+        let urls = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask)
         return urls.last!
     }
     
     
     
-    public static var applicationSupportDirectoryURL: NSURL {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask)
+    open static var applicationSupportDirectoryURL: URL {
+        let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         return urls.last!
     }
     
     
     
-    public static var cacheDirectoryURL: NSURL {
-        let urls = NSFileManager.defaultManager().URLsForDirectory(.CachesDirectory, inDomains: .UserDomainMask)
+    open static var cacheDirectoryURL: URL {
+        let urls = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
         return urls.last!
     }
     
     
     
-    public static var temporaryDirectoryURL: NSURL {
-        return NSURL(fileURLWithPath: NSTemporaryDirectory())
+    open static var temporaryDirectoryURL: URL {
+        return URL(fileURLWithPath: NSTemporaryDirectory())
     }
     
     
@@ -158,7 +158,7 @@ public class KApp: UIResponder, UIApplicationDelegate {
     
     
     
-    public func setupCoreData(modelName name: String, storeType type: String = NSSQLiteStoreType, useLightweightMigration useMigration: Bool = true) {
+    open func setupCoreData(modelName name: String, storeType type: String = NSSQLiteStoreType, useLightweightMigration useMigration: Bool = true) {
         modelName = name
         useLightweightMigration = useMigration
         storeType = type
@@ -166,28 +166,28 @@ public class KApp: UIResponder, UIApplicationDelegate {
     
     
     
-    public lazy var managedObjectModel: NSManagedObjectModel = {
+    open lazy var managedObjectModel: NSManagedObjectModel = {
         assert(self.modelName != nil, "EMPTY CORE DATA MODEL NAME: use setupCoreData()")
         
-        let modelURL = NSBundle.mainBundle().URLForResource(self.modelName, withExtension: "momd")!
-        return NSManagedObjectModel(contentsOfURL: modelURL)!
+        let modelURL = Bundle.main.url(forResource: self.modelName, withExtension: "momd")!
+        return NSManagedObjectModel(contentsOf: modelURL)!
     }()
     
     
     
-    public lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
+    open lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         assert(self.modelName != nil, "EMPTY CORE DATA MODEL NAME: use setupCoreData()")
         
         var coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = KApp.documentsDirectoryURL.URLByAppendingPathComponent("\(self.modelName).sqlite")
+        let url = KApp.documentsDirectoryURL.appendingPathComponent("\(self.modelName).sqlite")
         do {
-            var options: [NSObject: AnyObject]? = nil
+            var options: [AnyHashable: Any]? = nil
             if self.useLightweightMigration {
-                options = [NSMigratePersistentStoresAutomaticallyOption:NSNumber(bool: true),
-                           NSInferMappingModelAutomaticallyOption:NSNumber(bool: true)]
+                options = [NSMigratePersistentStoresAutomaticallyOption:NSNumber(value: true as Bool),
+                           NSInferMappingModelAutomaticallyOption:NSNumber(value: true as Bool)]
             }
             
-            try coordinator.addPersistentStoreWithType(self.storeType, configuration: nil, URL: url, options: options)
+            try coordinator.addPersistentStore(ofType: self.storeType, configurationName: nil, at: url, options: options)
         } catch {
             abort()
         }
@@ -197,12 +197,12 @@ public class KApp: UIResponder, UIApplicationDelegate {
     
     
     
-    public lazy var managedObjectContext: NSManagedObjectContext? = {
+    open lazy var managedObjectContext: NSManagedObjectContext? = {
         let coordinator = self.persistentStoreCoordinator
         if coordinator == nil {
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()

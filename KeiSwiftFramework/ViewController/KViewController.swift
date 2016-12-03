@@ -26,11 +26,11 @@ import UIKit
 
 public var LogViewControllerDeinitialization = true
 
-public class KViewController: UIViewController {
+open class KViewController: UIViewController {
     
-    public var visibleToUser = true
-    public var notificationNames = [String]()
-    public var backgroundImage: UIImage?
+    open var visibleToUser = true
+    open var notificationNames = [String]()
+    open var backgroundImage: UIImage?
     
     
     
@@ -39,14 +39,14 @@ public class KViewController: UIViewController {
     //
     // MARK: - VC Life Cycle
     //
-    public override func viewWillAppear(animated: Bool) {
+    open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         visibleToUser = true
     }
     
     
     
-    public override func viewDidDisappear(animated: Bool) {
+    open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         visibleToUser = false
     }

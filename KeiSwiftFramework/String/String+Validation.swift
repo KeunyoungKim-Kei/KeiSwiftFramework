@@ -25,13 +25,13 @@
 import Foundation
 
 public extension String {
-    public static func isValid(str: String?) -> Bool {
+    public static func isValid(_ str: String?) -> Bool {
         guard let s = str else {
             return false
         }
         
-        let trimmedString = s.stringByTrimmingCharactersInSet(
-            NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        let trimmedString = s.trimmingCharacters(
+            in: CharacterSet.whitespacesAndNewlines
         )
         
         
@@ -40,13 +40,13 @@ public extension String {
     
     
     
-    public static func isNullOrEmpty(str: String?) -> Bool {
+    public static func isNullOrEmpty(_ str: String?) -> Bool {
         return !isValid(str)
     }
     
     
     
-    public static func lengthCheck(str: String?, minimumLength: Int, maximumLength: Int = Int.max) -> Bool {
+    public static func lengthCheck(_ str: String?, minimumLength: Int, maximumLength: Int = Int.max) -> Bool {
         if String.isNullOrEmpty(str) {
             return false
         }
@@ -56,7 +56,7 @@ public extension String {
     
     
     
-    public func equalsTo(str: String?) -> Bool {
+    public func equalsTo(_ str: String?) -> Bool {
         guard let s = str else {
             return false
         }
@@ -74,6 +74,6 @@ public extension String {
         let emailRegEx = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"
         
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluateWithObject(self)
+        return emailTest.evaluate(with: self)
     }
 }

@@ -23,26 +23,26 @@
 //
 
 public extension KViewController {
-    public func handleNotification(noti: NSNotification) {
+    public func handleNotification(_ noti: Notification) {
         //print("HANDLE NOTIFICATION")
     }
     
     
     
-    public func postNotification(name: String, object: AnyObject? = nil) {
-        NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
+    public func postNotification(_ name: String, object: AnyObject? = nil) {
+        NotificationCenter.default.post(name: Notification.Name(rawValue: name), object: object)
     }
     
     
     
-    public func registerNotification(name: String) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(KViewController.handleNotification(_:)), name: name, object: nil)
+    public func registerNotification(_ name: String) {
+        NotificationCenter.default.addObserver(self, selector: #selector(KViewController.handleNotification(_:)), name: NSNotification.Name(rawValue: name), object: nil)
         notificationNames.append(name)
     }
     
     
     
-    public func registerNotifications(names: [String]) {
+    public func registerNotifications(_ names: [String]) {
         for name in names {
             registerNotification(name)
         }
@@ -50,17 +50,17 @@ public extension KViewController {
     
     
     
-    public func deregisterNotification(name: String) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: name, object: nil)
+    public func deregisterNotification(_ name: String) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: name), object: nil)
         
-        if let index = notificationNames.indexOf(name) {
-            notificationNames.removeAtIndex(index)
+        if let index = notificationNames.index(of: name) {
+            notificationNames.remove(at: index)
         }
     }
     
     
     
-    public func deregisterNotifications(names: [String]) {
+    public func deregisterNotifications(_ names: [String]) {
         for name in names {
             deregisterNotification(name)
         }
@@ -70,6 +70,6 @@ public extension KViewController {
     
     public func deregisterAllNotification() {
         notificationNames.removeAll()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }

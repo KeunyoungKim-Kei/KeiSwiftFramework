@@ -24,22 +24,22 @@
 
 import Foundation
 
-infix operator ~ { associativity left precedence 150 }
-public func ~(lhs: NSDate, rhs: NSDate) -> NSTimeInterval {
+infix operator ~ : MultiplicationPrecedence
+public func ~(lhs: NSDate, rhs: NSDate) -> TimeInterval {
     return lhs.timeIntervalSince1970 - rhs.timeIntervalSince1970
 }
 
-public class KInterval: NSObject {
-    public class func exceeded(interval: NSTimeInterval, minDate: NSDate, maxDate: NSDate = Today.now) -> Bool {
+open class KInterval: NSObject {
+    open class func exceeded(_ interval: TimeInterval, minDate: NSDate, maxDate: NSDate = Today.now) -> Bool {
         return maxDate - minDate > interval
     }
     
     
     
-    public class func dateByAdding(toDate date: NSDate, year: Int = 0, month: Int = 0, day: Int = 0, hour: Int = 0, minute: Int = 0, second: Int = 0) -> NSDate {
-        let calendar = NSCalendar.currentCalendar()
+    open class func dateByAdding(toDate date: NSDate, year: Int = 0, month: Int = 0, day: Int = 0, hour: Int = 0, minute: Int = 0, second: Int = 0) -> NSDate {
+        let calendar = NSCalendar.current
         
-        let comps = NSDateComponents()
+        var comps = DateComponents()
         comps.year = year
         comps.month = month
         comps.day = day
@@ -47,99 +47,99 @@ public class KInterval: NSObject {
         comps.minute = minute
         comps.second = second
         
-        return calendar.dateByAddingComponents(comps, toDate: date, options: [])!
+        return calendar.date(byAdding: comps, to: date as Date)! as NSDate
     }
     
     
     
-    public class func years(minDate minDate: NSDate, maxDate: NSDate) -> Int {
+    open class func years(minDate: NSDate, maxDate: NSDate) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Year], fromDate: minDate, toDate: maxDate, options:[])
-        return components.year
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.year], from: minDate as Date, to: maxDate as Date)
+        return components.year!
     }
     
     
     
-    public class func dateByAddingYears(year: Int, toDate: NSDate) -> NSDate {
+    open class func dateByAddingYears(_ year: Int, toDate: NSDate) -> NSDate {
         return dateByAdding(toDate: toDate, year: year)        
     }
     
     
     
-    public class func months(minDate minDate: NSDate, maxDate: NSDate) -> Int {
+    open class func months(minDate: Date, maxDate: Date) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Month], fromDate: minDate, toDate: maxDate, options:[])
-        return components.month
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.month], from: minDate as Date, to: maxDate as Date)
+        return components.month!
     }
     
     
     
-    public class func dateByAddingMonths(month: Int, toDate: NSDate) -> NSDate {
+    open class func dateByAddingMonths(_ month: Int, toDate: NSDate) -> NSDate {
         return dateByAdding(toDate: toDate, month: month)
     }
     
     
     
-    public class func days(minDate minDate: NSDate, maxDate: NSDate) -> Int {
+    open class func days(minDate: NSDate, maxDate: NSDate) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day], fromDate: minDate, toDate: maxDate, options:[])
-        return components.day
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([Calendar.Component.day], from: minDate as Date, to: maxDate as Date)
+        return components.day!
     }
     
     
     
-    public class func days(range range: KDateRange) -> Int {
+    open class func days(range: KDateRange) -> Int {
         return days(minDate: range.beginDate, maxDate: range.endDate)
     }
     
     
     
-    public class func dateByAddingDays(day: Int, toDate: NSDate) -> NSDate {
+    open class func dateByAddingDays(_ day: Int, toDate: NSDate) -> NSDate {
         return dateByAdding(toDate: toDate, day: day)
     }
     
     
     
-    public class func hours(minDate minDate: NSDate, maxDate: NSDate) -> Int {
+    open class func hours(minDate: NSDate, maxDate: NSDate) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Hour], fromDate: minDate, toDate: maxDate, options:[])
-        return components.hour
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.hour], from: minDate as Date, to: maxDate as Date)
+        return components.hour!
     }
     
     
     
-    public class func minutes(minDate minDate: NSDate, maxDate: NSDate, minValue: Int = 0) -> Int {
+    open class func minutes(minDate: NSDate, maxDate: NSDate, minValue: Int = 0) -> Int {
         assert(minDate <= maxDate, "minDate > maxDate")
         
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Minute], fromDate: minDate, toDate: maxDate, options:[])
+        let calendar = NSCalendar.current
+        let components = calendar.dateComponents([.minute], from: minDate as Date, to: maxDate as Date)
         
-        return max(components.minute, minValue)
+        return max(components.minute!, minValue)
     }
     
     
     
-    public class func minutesBeforeNow(date: NSDate, minValue: Int = 0) -> Int {
+    open class func minutesBeforeNow(_ date: NSDate, minValue: Int = 0) -> Int {
         return minutes(minDate: date, maxDate: NSDate(), minValue: minValue)
     }
     
     
     
-    public class func minutesAfterNow(date: NSDate, minValue: Int = 0) -> Int {
+    open class func minutesAfterNow(_ date: NSDate, minValue: Int = 0) -> Int {
         return minutes(minDate: NSDate(), maxDate: date, minValue: minValue)
     }
     
     
     
-    public class func dateByAddingSeconds(second: Int, toDate: NSDate) -> NSDate {
+    open class func dateByAddingSeconds(_ second: Int, toDate: NSDate) -> NSDate {
         return dateByAdding(toDate: toDate, second: second)
     }
 }

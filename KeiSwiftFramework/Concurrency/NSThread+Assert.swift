@@ -25,15 +25,15 @@
 import Foundation
 
 public func THIS_THREAD_MUST_BE_MAIN_THREAD() {
-    assert(NSThread.isMainThread(), "THIS CODE MUST BE PERFORMED ON THE MAIN THREAD!!!")
+    assert(Thread.isMainThread, "THIS CODE MUST BE PERFORMED ON THE MAIN THREAD!!!")
 }
 
 
 
 public func PRINT_THREAD_INFO() {
-    if NSThread.isMainThread() {
-        print("MAIN THREAD \(NSThread.currentThread())")
+    if Thread.isMainThread {
+        print("MAIN THREAD \(Thread.current)")
     } else {
-        print("WORKER THREAD \(NSThread.currentThread())")
+        print("WORKER THREAD \(Thread.current)")
     }
 }

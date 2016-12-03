@@ -23,10 +23,10 @@
 //
 
 public extension KViewController {
-    public func findFirstResponder(v: UIView? = nil) -> UIView? {
+    public func findFirstResponder(_ v: UIView? = nil) -> UIView? {
         if let targetView = v {
             for item in targetView.subviews {
-                if item.isFirstResponder() {
+                if item.isFirstResponder {
                     return item
                 }
                 
@@ -36,7 +36,7 @@ public extension KViewController {
             }
         } else {
             for item in view.subviews {
-                if item.isFirstResponder() {
+                if item.isFirstResponder {
                     return item
                 }
                 
@@ -51,10 +51,10 @@ public extension KViewController {
     
     
     
-    public func findFirstResponderAndResign(v: UIView? = nil) {
+    public func findFirstResponderAndResign(_ v: UIView? = nil) {
         if let targetView = v {
             for item in targetView.subviews {
-                if item.isFirstResponder() {
+                if item.isFirstResponder {
                     item.resignFirstResponder()
                     return
                 }
@@ -63,7 +63,7 @@ public extension KViewController {
             }
         } else {
             for item in view.subviews {
-                if item.isFirstResponder() {
+                if item.isFirstResponder {
                     item.resignFirstResponder()
                     return
                 }

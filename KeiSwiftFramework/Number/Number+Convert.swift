@@ -26,7 +26,7 @@ import Foundation
 
 public extension Double {
     public var NSNumberValue: NSNumber {
-        return NSNumber(double: self)
+        return NSNumber(value: self as Double)
     }
     
     
@@ -41,7 +41,7 @@ public extension Double {
 
 public extension Int {
     public var NSNumberValue: NSNumber {
-        return NSNumber(integer: self)
+        return NSNumber(value: self as Int)
     }
     
     
@@ -56,6 +56,6 @@ public extension Int {
 
 public extension Bool {
     public var NSNumberValue: NSNumber {
-        return NSNumber(bool: self)
+        return NSNumber(value: self as Bool)
     }
 }

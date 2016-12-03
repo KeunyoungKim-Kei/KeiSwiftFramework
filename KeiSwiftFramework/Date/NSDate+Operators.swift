@@ -49,7 +49,7 @@ public func >=(lhs: NSDate, rhs: NSDate) -> Bool {
     return lhs.timeIntervalSince1970 >= rhs.timeIntervalSince1970
 }
 
-public func -(lhs: NSDate, rhs: NSDate) -> NSTimeInterval {
+public func -(lhs: NSDate, rhs: NSDate) -> TimeInterval {
     return lhs.timeIntervalSince1970 - rhs.timeIntervalSince1970
 }
 
@@ -60,16 +60,16 @@ public func -(lhs: NSDate, rhs: NSDate) -> NSTimeInterval {
 //
 // MARK: -
 //
-public func +(lhs: NSDate, rhs: NSTimeInterval) -> NSDate {
-    return lhs.dateByAddingTimeInterval(rhs)
+public func +(lhs: NSDate, rhs: TimeInterval) -> NSDate {
+    return lhs.addingTimeInterval(rhs)
 }
 
-public func +(lhs: NSTimeInterval, rhs: NSDate) -> NSDate {
+public func +(lhs: TimeInterval, rhs: NSDate) -> NSDate {
     return rhs + lhs
 }
 
-public func -(lhs: NSDate, rhs: NSTimeInterval) -> NSDate {
-    return lhs.dateByAddingTimeInterval(rhs * -1)
+public func -(lhs: NSDate, rhs: TimeInterval) -> NSDate {
+    return lhs.addingTimeInterval(rhs * -1)
 }
 
 //public func -(lhs: NSTimeInterval, rhs: NSDate) -> NSDate {

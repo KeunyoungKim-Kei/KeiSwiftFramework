@@ -24,8 +24,8 @@
 
 import UIKit
 
-@IBDesignable public class KPaddingTextField: UITextField {
-    @IBInspectable public var leftPadding: CGFloat = 20 {
+@IBDesignable open class KPaddingTextField: UITextField {
+    @IBInspectable open var leftPadding: CGFloat = 20 {
         didSet {
             setupView()
         }
@@ -33,7 +33,7 @@ import UIKit
     
     
     
-    @IBInspectable public var rightPadding: CGFloat = 20 {
+    @IBInspectable open var rightPadding: CGFloat = 20 {
         didSet {
             setupView()
         }
@@ -41,7 +41,7 @@ import UIKit
     
     
     
-    @IBInspectable public var cornerRadius: CGFloat = 0 {
+    @IBInspectable open var cornerRadius: CGFloat = 0 {
         didSet {
             layer.cornerRadius = cornerRadius
             clipsToBounds = true
@@ -67,10 +67,10 @@ import UIKit
     func setupView() {
         let height = bounds.height
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: leftPadding, height: height))
-        leftViewMode = UITextFieldViewMode.Always
+        leftViewMode = UITextFieldViewMode.always
         
         rightView = UIView(frame: CGRect(x: 0, y: 0, width: rightPadding, height: height))
-        rightViewMode = UITextFieldViewMode.Always
+        rightViewMode = UITextFieldViewMode.always
         
         layer.cornerRadius = cornerRadius
         clipsToBounds = true

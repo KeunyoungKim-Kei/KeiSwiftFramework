@@ -24,8 +24,8 @@
 
 import UIKit
 
-@IBDesignable public class KCircleView: UIView {
-    public override func awakeFromNib() {
+@IBDesignable open class KCircleView: UIView {
+    open override func awakeFromNib() {
         super.awakeFromNib()
         
         layer.cornerRadius = bounds.width.half

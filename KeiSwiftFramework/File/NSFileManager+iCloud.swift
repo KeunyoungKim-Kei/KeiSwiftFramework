@@ -24,7 +24,7 @@
 
 import Foundation
 
-public extension NSFileManager{
+public extension FileManager{
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // MARK: - Prevent files from being backed up to iCloud and iTunes
     
@@ -33,7 +33,7 @@ public extension NSFileManager{
      
      - Parameter url: A file URL specifying the file or directory to set
      */
-    public func addSkipBackupAttributeToItemAtURLOrThrows(url:NSURL) throws {
+    public func addSkipBackupAttributeToItemAtURLOrThrows(_ url:NSURL) throws {
         try url.addSkipBackupAttributeOrThrows()
     }
     
@@ -46,7 +46,7 @@ public extension NSFileManager{
      
      - Returns: **true** if the resource property is successfully set to true; otherwise, false.
      */
-    public func addSkipBackupAttributeToItemAtURL(url:NSURL) -> Bool {
+    public func addSkipBackupAttributeToItemAtURL(_ url:NSURL) -> Bool {
         return url.addSkipBackupAttribute()
     }
 }
