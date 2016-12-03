@@ -25,26 +25,26 @@
 import Foundation
 
 open class GCD {
-    open class var highPriority: DispatchQueue.GlobalQueuePriority {
-        return DispatchQueue.GlobalQueuePriority.high
+    open class var highPriority: DispatchQoS.QoSClass {
+        return .userInitiated
     }
     
     
     
-    open class var defaultPriority: DispatchQueue.GlobalQueuePriority {
-        return DispatchQueue.GlobalQueuePriority.default
+    open class var defaultPriority: DispatchQoS.QoSClass {
+        return .default
     }
     
     
     
-    open class var lowPriority: DispatchQueue.GlobalQueuePriority {
-        return DispatchQueue.GlobalQueuePriority.low
+    open class var lowPriority: DispatchQoS.QoSClass {
+        return .utility
     }
     
     
     
-    open class var backgroundPriority: DispatchQueue.GlobalQueuePriority {
-        return DispatchQueue.GlobalQueuePriority.background
+    open class var backgroundPriority: DispatchQoS.QoSClass {
+        return .background
     }
 }
 
@@ -77,14 +77,14 @@ open class AsyncGCD: GCD {
     
     
     
-    open class func performOnGlobalQueue(_ priority: DispatchQueue.GlobalQueuePriority = DispatchQueue.GlobalQueuePriority.default, _ block: @escaping ()->()) {
+    open class func performOnGlobalQueue(_ priority: DispatchQoS.QoSClass = .default, _ block: @escaping ()->()) {
         performDelayedOnGlobalQueue(0.0, priority, block)
     }
     
     
     
-    open class func performDelayedOnGlobalQueue(_ delay: Double = 0.0, _ priority: DispatchQueue.GlobalQueuePriority = DispatchQueue.GlobalQueuePriority.default, _ block: @escaping ()->()) {
-        let queue = DispatchQueue.global(priority: priority)
+    open class func performDelayedOnGlobalQueue(_ delay: Double = 0.0, _ priority: DispatchQoS.QoSClass = .default, _ block: @escaping ()->()) {
+        let queue = DispatchQueue.global(qos: priority)
         
         if delay > 0.0 {
             let when = DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
